@@ -1,8 +1,8 @@
 <div class="row align-items-center justify-content-xl-between">
     <div class="col-xl-6">
         <div class="copyright text-center text-xl-left text-muted">
-            &copy; {{ now()->year }} <a href="https://github.com/Aryaak" class="font-weight-bold link-warning ml-1" target="_blank">Arya</a> &amp;
-            <a href="https://github.com/TiarSukaCoding" class="font-weight-bold link-warning ml-1" target="_blank">Tiar</a>
+            &copy; {{ now()->year }} <a href="https://github.com/Aryaak" class="font-weight-bold link-warning ml-1" target="_blank">Aryaak</a> &amp;
+            <a href="https://github.com/TiarSukaCoding" class="font-weight-bold link-warning ml-1" target="_blank">TiarSukaCoding</a>
         </div>
     </div>
     <div class="col-xl-6">
@@ -14,7 +14,7 @@
                 <a href="http://blog.creative-tim.com" class="nav-link" target="_blank">Blog</a>
             </li>
             <li class="nav-item">
-                <a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md" class="nav-link" target="_blank">MIT License</a>
+                <a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md" class="nav-link" target="_blank">License</a>
             </li>
         </ul>
     </div>
