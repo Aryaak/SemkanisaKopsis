@@ -7,7 +7,7 @@
 
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Argon Dashboard') }}</title>
+        <title>{{ config('app.name', 'Semkanisa Kopsis Dashboard') }}</title>
         <!-- Favicon -->
         <link href="{{ asset('public/argon/img/brand/favicon.png') }}" rel="icon" type="image/png">
         <!-- Fonts -->
@@ -28,7 +28,7 @@
             @include('layouts.navbars.sidebar')
         @endauth
 
-        <div class="main-content">
+        <div class="main-content" id="panel">
             @include('layouts.navbars.navbar')
             @yield('content')
         </div>
@@ -37,12 +37,16 @@
             @include('layouts.footers.guest')
         @endguest
 
-        <script src="{{ asset('argon') }}/vendor/jquery/dist/jquery.min.js"></script>
-        <script src="{{ asset('argon') }}/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        {{-- <script src="{{ asset('public/argon/vendor/jquery/dist/jquery.min.js')}}"></script> --}}
+        <!-- JQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        {{-- <script src="{{ asset('public/argon/vendor/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script> --}}
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
 
         @stack('js')
 
         <!-- Argon JS -->
-        <script src="{{ asset('argon') }}/js/argon.js?v=1.0.0"></script>
+        <script src="{{ asset('public/argon/js/argon.js?v=1.0.0')}}"></script>
+
     </body>
 </html>

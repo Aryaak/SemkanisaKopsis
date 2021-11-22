@@ -19,7 +19,6 @@
 //
 // Bootstrap Datepicker
 //
-
 'use strict';
 
 var Datepicker = (function() {
@@ -201,8 +200,6 @@ var Headroom = (function() {
             down: 30
         },
     });
-
-
 
 	// Events
 

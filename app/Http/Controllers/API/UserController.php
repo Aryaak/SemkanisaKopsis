@@ -37,7 +37,7 @@ class UserController extends Controller
         $checkEmail = User::where('email', $request->email)->first();
 
         if ($checkEmail) {
-            return ResponseFormatter::failed('Emeil Already Use!', ['Use antoher email'], 401);
+            return ResponseFormatter::failed('Email Already Use!', ['Use antoher email'], 401);
         }
 
         if ($validator->fails()) {

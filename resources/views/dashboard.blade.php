@@ -2,7 +2,7 @@
 
 @section('content')
     @include('layouts.headers.cards')
-    
+
     <div class="container-fluid mt--7">
         <div class="row">
             <div class="col-xl-8 mb-5 mb-xl-0">
@@ -68,7 +68,7 @@
                                 <h3 class="mb-0">Page visits</h3>
                             </div>
                             <div class="col text-right">
-                                <a href="#!" class="btn btn-sm btn-primary">See all</a>
+                                <a href="#!" class="btn btn-sm btn-warning">See all</a>
                             </div>
                         </div>
                     </div>
@@ -167,7 +167,7 @@
                                 <h3 class="mb-0">Social traffic</h3>
                             </div>
                             <div class="col text-right">
-                                <a href="#!" class="btn btn-sm btn-primary">See all</a>
+                                <a href="#!" class="btn btn-sm btn-warning">See all</a>
                             </div>
                         </div>
                     </div>
@@ -230,7 +230,7 @@
                                             <span class="mr-2">80%</span>
                                             <div>
                                                 <div class="progress">
-                                                <div class="progress-bar bg-gradient-primary" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;"></div>
+                                                <div class="progress-bar bg-gradient-warning" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;"></div>
                                                 </div>
                                             </div>
                                         </div>
