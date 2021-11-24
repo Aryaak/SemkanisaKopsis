@@ -27,40 +27,18 @@ class ProductController extends Controller
     {
         $photo = $request->file('photo');
         $product->create($request->all());
-        return redirect()->route('product.index')->withSuccess(__('Product created successfully.'));
+        return redirect()->route('products')->withSuccess(__('Product created successfully.'));
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Product $product)
-    {
-        //
-    }
-
     /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit(Product $product,$id)
     {
-        //
+        $product = Product::find($id);
+        return view('product.edit',['product'=>$product]);
     }
 
     /**
@@ -70,22 +48,11 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
-    {
-        $product->update($request->all());
-        return redirect()->route('product.index')->withSuccess(__('Product updated successfully.'));
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $product = Product::find($id);
         $product->update($request->all());
-        return redirect()->route('product.index')->withSuccess(__('Product deleted successfully.'));
+        return redirect()->route('products')->withSuccess(__('Product updated successfully.'));
     }
+
 }

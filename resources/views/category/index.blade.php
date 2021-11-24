@@ -5,21 +5,21 @@
 @section('content')
 @include('layouts.headers.blank')
     <!-- Header -->
-    <div class="header bg-dark pb-6">
+    <div class="header bg-dark pb-6 mr--4">
       <div class="container-fluid">
         <div class="header-body">
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-              <h6 class="h2 text-white d-inline-block mb-0">Products</h6>
+              <h6 class="h2 text-white d-inline-block mb-0">Kategori</h6>
               <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                   <li class="breadcrumb-item" style="color: #f48e5f;"><a href="#"><i class="fas fa-home"></i></a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Products</li>
+                  <li class="breadcrumb-item active" aria-current="page">Kategori</li>
                 </ol>
               </nav>
             </div>
             <div class="col-lg-6 col-5 text-right">
-              <a type="button" class="btn btn-sm btn-neutral" data-toggle="modal" data-target="#addNew" title="Create New Product">New</a>
+              <button type="button" class="btn btn-sm p-2 btn-warning" data-toggle="modal" data-target="#addNew" title="Create New category">Tambah Baru</button>
               <a href="#" class="btn btn-sm btn-neutral">Filters</a>
             </div>
           </div>
@@ -30,111 +30,110 @@
     <div class="container-fluid mt--6">
       <div class="row">
         <div class="col">
-          <div class="card">
+          <div class="card pl-3 pr-3 pb-3">
             <!-- Card header -->
             <div class="card-header border-0">
-              <h3 class="mb-0">Products</h3>
+              <h3 class="mb-0">Kategori</h3>
             </div>
             <!-- Light table -->
             <div class="table-responsive">
-              <table id="products" class="table table-stripped align-items-center table-flush p-10" style="width:100%">
+              <table id="categorys" class="table table-stripped align-items-center table-flush p-10" style="width:100%">
                 <thead class="thead-light">
                   <tr>
-                    <th scope="col" class="sort" data-sort="name">Name</th>
-                    <th scope="col" class="sort" data-sort="category">Category</th>
-                    <th scope="col">Photo</th>
-                    <th scope="col">Stock</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Description</th>
+                    <th scope="col" class="sort" data-sort="name">Nama</th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody class="list">
-
+                    @foreach ($category as $category)
                   <tr>
                     <th scope="row">
                       <div class="media align-items-center">
                         <div class="media-body">
-                          <span class="name mb-0 text-sm">Sepatu</span>
+                          <span class="name mb-0 text-sm">{{$category->name}}</span>
                         </div>
                       </div>
                     </th>
-                    <td class="category">
-                      Alas Kaki
-                    </td>
-                    <td class="photo">
-                      <img class="rounded" style="width: 100px;" src="https://dummyimage.com/100x100/111/fff" alt="test">
-                    </td>
-                    <td class="stock">
-                      5000 Units
-                    </td>
-                    <td class="price">
-                      $2500 USD
-                    </td>
-                    <td class="description">
-                      desc
-                    </td>
-                    <td class="text-right">
-                      {{-- <div class="dropdown" title="Actions">
-                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="fas fa-ellipsis-v"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                            <a class="dropdown-item" style="color: #f48e5f;" data-toggle="modal" data-target="#edit">
-                            <img class="img-fluid float-right" src="{{asset('public/img/icons/edit.svg')}}" alt="">
-                            Edit
-                            </a>
-                            <a class="dropdown-item" style="color: #f4645f;" data-toggle="modal" data-target="#delete">
-                            <img class="img-fluid float-right" src="{{asset('public/img/icons/trash.svg')}}" alt="">
-                            Delete
-                            </a>
-                        </div>
-                      </div> --}}
+                    <td class="">
                       <span>
-                        <a class="btn btn-sm btn-icon-only" style="color: #f48e5f;" data-toggle="modal" data-target="#edit">
-                        <img class="img-fluid" src="{{asset('public/img/icons/edit.svg')}}" alt="">
+                        <a class="btn btn-sm btn-icon-only" style="color: #f48e5f;" data-toggle="modal" data-target="#Edit{{$category->id}}">
+                        <img class="img-fluid" src="{{asset('public/img/icons/edit.svg')}}" alt="Ubah">
                         </a>
-                        <a class="btn btn-sm btn-icon-only" style="color: #f4645f;" data-toggle="modal" data-target="#delete">
-                        <img class="img-fluid" src="{{asset('public/img/icons/trash.svg')}}" alt="">
-                        </a>
+                        <form action="Kategori/{{$category->id}}/update" method="post">
+                            @csrf
+                            <input style="display: none;" value="1" id="deleted" name="deleted">
+                            <button type="submit" class="btn btn-sm btn-icon-only" onclick="return confirm('Apakah anda yakin ingin menghapus?')" style="color: #f4645f;">
+                            <img class="img-fluid" src="{{asset('public/img/icons/trash.svg')}}" alt="Hapus">
+                        </button>
+                    </form>
                       </span>
                     </td>
                   </tr>
-
+                  <!-- Edit Modal -->
+  <div class="float modal fade" id="Edit{{$category->id}}" tabindex="-1" aria-labelledby="Edit{{$category->id}}Label" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="Edit{{$category->id}}Label">Add</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form method="POST" action="{{route('category.update',$category->id)}}">
+                @csrf
+                <div class="form-group row">
+                  <label for="name" class="col-sm-2 col-form-label">Nama</label>
+                  <input type="text" class="form-control col-sm-9" id="name" name="name" placeholder="Masukan Nama Kategori, contoh: Alat Tulis" value="{{$category->name}}" required autofocus>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                <button type="submit" class="btn btn-warning">Simpan Perubahan</button>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+                  @endforeach
                 </tbody>
               </table>
             </div>
-            <!-- Card footer -->
-            {{-- <div class="card-footer py-4">
-              <nav aria-label="...">
-                <ul class="pagination justify-content-end mb-0">
-                  <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1">
-                      <i class="fas fa-angle-left"></i>
-                      <span class="sr-only">Previous</span>
-                    </a>
-                  </li>
-                  <li class="page-item active">
-                    <a class="page-link" href="#">1</a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">
-                      <i class="fas fa-angle-right"></i>
-                      <span class="sr-only">Next</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-            </div> --}}
           </div>
         </div>
       </div>
 @include('layouts.footers.auth')
     </div>
+
+    <!-- Add Modal -->
+  <div class="modal fade" id="addNew" tabindex="-1" aria-labelledby="addNewLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addNewLabel">Add</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form method="POST" action="{{route('category.create')}}">
+                @csrf
+                <div class="form-group row">
+                  <label for="name" class="col-sm-2 col-form-label">Nama</label>
+                  <input type="text" class="form-control col-sm-9" id="name" name="name" placeholder="Masukan Nama Kategori, contoh: Alat Tulis" required autofocus>
+                  <div id="name" class="invalid-feedback">
+                    {{$errors->first('name')}}
+                  </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                <button type="submit" class="btn btn-warning">Tambah</button>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
 @endsection
 
 @push('js')
@@ -155,7 +154,7 @@
 
 <script>
     $(document).ready( function () {
-    $('#products').DataTable();
+    $('#categorys').DataTable();
 } );
 </script>
 
@@ -163,7 +162,8 @@
 photo.onchange = evt => {
   const [file] = photo.files
   if (file) {
-    preview.src = URL.createObjectURL(file)
+    preview.src = URL.createObjectURL(file);
+    photo.files = URL.createObjectURL(file);
   }
 }
 </script>
@@ -179,125 +179,3 @@ photo.onchange = evt => {
 </script>
 @endpush
 
-  <!-- Add Modal -->
-  <div class="modal fade" id="addNew" tabindex="-1" aria-labelledby="addNewLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addNewLabel">Add</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <form>
-                <div class="form-group row">
-                  <label for="name" class="col-sm-2 col-form-label">Name</label>
-                  <input type="text" class="form-control col-sm-9" id="name" placeholder="Example Name" required autofocus>
-                </div>
-                <div class="form-group row">
-                  <label for="category" class="col-sm-2 col-form-label">Category</label>
-                  <select id="category" class="form-control col-sm-9">
-                    <option>Category</option>
-                  </select>
-                </div>
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Photo</label>
-                    <div class="custom-file col-sm-6">
-                      <input accept="image/*" type="file" id="photo" multiple class="custom-file-input form-control" id="photo">
-                      <label class="custom-file-label" for="photo">Choose image</label>
-                    </div>
-                    <img id="preview" class="rounded ml-5" style="height: 100px;" src="https://dummyimage.com/100x100/111/eee&text=preview" alt="">
-                  </div>
-                <div class="form-group row">
-                  <label for="stock" class="col-sm-2 col-form-label">Stock</label>
-                  <input type="text" class="form-control col-sm-9" id="stock" onkeypress="return isNumberKey(event)" placeholder="1234" required>
-                </div>
-                <div class="form-group row">
-                  <label for="price" class="col-sm-2 col-form-label">Price</label>
-                  <input type="text" class="form-control col-sm-9" id="price" onkeypress="return isNumberKey(event)" placeholder="1234" required>
-                </div>
-                <div class="form-group">
-                  <label for="description">Description</label>
-                  <textarea rows="3" class="form-control col-sm-11" id="description" placeholder="Example Description"></textarea>
-                </div>
-              </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-warning">Add</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Edit Modal -->
-  <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="editLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="editLabel">Edit</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <form>
-                <div class="form-group row">
-                  <label for="name" class="col-sm-2 col-form-label">Name</label>
-                  <input type="text" class="form-control col" id="name" placeholder="Example Name" required autofocus>
-                </div>
-                <div class="form-group row">
-                  <label for="category" class="col-sm-2 col-form-label">Category</label>
-                  <input type="text" class="form-control col" id="category" placeholder="Example Category" required>
-                </div>
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Photo</label>
-                    <div class="custom-file col-sm-6">
-                      <input accept="image/*" type="file" id="photo" multiple class="custom-file-input form-control" id="photo">
-                      <label class="custom-file-label" for="photo">Choose image</label>
-                    </div>
-                    <img id="preview" class="rounded ml-5" style="height: 100px;" src="https://dummyimage.com/100x100/111/eee&text=preview" alt="">
-                </div>
-                <div class="form-group row">
-                  <label for="stock" class="col-sm-2 col-form-label">Stock</label>
-                  <input type="text" class="form-control col" id="stock" onkeypress="return isNumberKey(event)" placeholder="1234" required>
-                </div>
-                <div class="form-group row">
-                  <label for="price" class="col-sm-2 col-form-label">Price</label>
-                  <input type="text" class="form-control col" id="price" onkeypress="return isNumberKey(event)" placeholder="1234" required>
-                </div>
-                <div class="form-group">
-                  <label for="description">Description</label>
-                  <textarea rows="3" class="form-control" id="description" placeholder="Example Description"></textarea>
-                </div>
-              </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-warning">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Delete Modal -->
-<div class="modal fade" id="delete" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="deleteLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="deleteLabel">Delete</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <h1>Are You Sure?</h1>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-danger">Delete</button>
-        </div>
-      </div>
-    </div>
-  </div>
