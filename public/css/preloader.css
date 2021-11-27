@@ -34,7 +34,7 @@ vertical-align: middle;
 width: .6em;
 height: .6em;
 margin: .19em;
-background: #ff3c00;
+background: #eeeeee;
 border-radius: .6em;
 animation: loading 1s infinite alternate;
 }
@@ -43,7 +43,7 @@ animation: loading 1s infinite alternate;
 * Dots Colors
 * Smarter targeting vs nth-of-type?
 */
-.loading span:nth-of-type(2) {
+/* .loading span:nth-of-type(2) {
 background: #ff6600;
 animation-delay: 0.2s;
 }
@@ -66,7 +66,7 @@ animation-delay: 1.0s;
 .loading span:nth-of-type(7) {
 background: #fbff00;
 animation-delay: 1.2s;
-}
+} */
 
 /*
 * Animation keyframes

@@ -30,6 +30,24 @@
     <div class="container-fluid mt--6">
       <div class="row">
         <div class="col">
+            {{-- @if(Session::has('success'))
+                <div class="alert alert-success">
+                    {{Session::get('success')}}
+                </div>
+            @endif
+            @if(Session::has('error'))
+                <div class="alert alert-danger">
+                    {{Session::get('error')}}
+                </div>
+            @endif --}}
+            @if(Session::has('message'))
+<div class="alert {{ Session::get('alert-class', 'alert-info') }} alert-dismissible fade show">
+    {{ Session::get('message') }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+@endif
           <div class="card pl-3 pr-3 pb-3">
             <!-- Card header -->
             <div class="card-header border-0">
@@ -60,7 +78,7 @@
                       </div>
                     </th>
                     <td class="category">
-                      {{$product->category_id}}
+                      {{$product->category}}
                     </td>
                     <td class="photo">
                       <img class="rounded" style="width: 100px;" src="{{$product->photo}}" alt="test">
@@ -90,7 +108,7 @@
                     </td>
                   </tr>
 <!-- Edit Modal -->
-  <div class="float modal fade" id="Edit{{$product->id}}" tabindex="-1" aria-labelledby="Edit{{$product->id}}Label" aria-hidden="true">
+  <div class="modal fade" id="Edit{{$product->id}}" tabindex="-1" aria-labelledby="Edit{{$product->id}}Label" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -100,7 +118,7 @@
           </button>
         </div>
         <div class="modal-body">
-            <form method="POST" action="{{route('product.update',$product->id)}}">
+            <form method="POST" enctype="multipart/form-data" action="{{route('product.update',$product->id)}}">
                 @csrf
                 <div class="form-group row">
                   <label for="name" class="col-sm-2 col-form-label">Nama</label>
@@ -116,7 +134,7 @@
                 <div class="form-group row">
                     <label for="photo" class="col-sm-2 col-form-label">Gambar</label>
                     <div class="custom-file col-sm-6">
-                      <input accept="image/*" type="file" id="photo" multiple class="custom-file-input form-control" name="photo" value="testtestbrobro" required>
+                      <input accept="image/*" type="file" id="photo" class="custom-file-input form-control" name="photo" value="testtestbrobro" required>
                       <label class="custom-file-label" for="photo">Pilih Gambar</label>
                     </div>
                     <img id="preview" class="rounded ml-5" style="height: 100px;" src="{{$product->photo}}" alt="">
@@ -182,7 +200,7 @@
     </div>
 
     <!-- Add Modal -->
-  <div class="modal fade" id="addNew" tabindex="-1" aria-labelledby="addNewLabel" aria-hidden="true">
+  <div class="modal fade" id="addNew" tabindex="-2" aria-labelledby="addNewLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -192,11 +210,11 @@
           </button>
         </div>
         <div class="modal-body">
-            <form method="POST" action="{{route('product.create')}}">
+            <form method="POST" enctype="multipart/form-data" action="{{route('product.create')}}">
                 @csrf
                 <div class="form-group row">
                   <label for="name" class="col-sm-2 col-form-label">Nama</label>
-                  <input type="text" class="form-control col-sm-9" id="name" name="name" placeholder="Example Name" required autofocus>
+                  <input type="text" class="form-control col-sm-9" id="name" name="name" placeholder="Nama Produk" required autofocus>
                   <div id="name" class="invalid-feedback">
                     {{$errors->first('name')}}
                   </div>
@@ -214,28 +232,28 @@
                 <div class="form-group row">
                     <label for="photo" class="col-sm-2 col-form-label">Gambar</label>
                     <div class="custom-file col-sm-6">
-                      <input accept="image/*" type="file" id="photo" multiple class="custom-file-input form-control" name="photo" value="testtestbrobro" required>
+                      <input accept="image/*" type="file" id="photo" class="custom-file-input form-control" name="photo" value="testtestbrobro" required>
                       <label class="custom-file-label" for="photo">Pilih Gambar</label>
                     </div>
                     <img id="preview" class="rounded ml-5" style="height: 100px;" src="https://dummyimage.com/100x100/111/eee&text=preview" alt="">
                   </div>
                 <div class="form-group row">
                   <label for="stock" class="col-sm-2 col-form-label">Stok</label>
-                  <input type="text" class="form-control col-sm-9" id="stock" name="stock" onkeypress="return isNumberKey(event)" placeholder="1234" required>
+                  <input type="text" class="form-control col-sm-9" id="stock" name="stock" onkeypress="return isNumberKey(event)" placeholder="Masukan Jumlah Stok, Contoh: 123" required>
                   <div id="stock" class="invalid-feedback">
                     {{$errors->first('stock')}}
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="price" class="col-sm-2 col-form-label">Harga</label>
-                  <input type="text" class="form-control col-sm-9" id="price" name="price" onkeypress="return isNumberKey(event)" placeholder="1234" required>
+                  <input type="text" class="form-control col-sm-9" id="price" name="price" onkeypress="return isNumberKey(event)" placeholder="Masukan Harga Produk, Contoh: 2500" required>
                   <div id="price" class="invalid-feedback">
                     {{$errors->first('price')}}
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="description">Keterangan</label>
-                  <textarea rows="3" class="form-control col-sm-11" id="description" name="description" placeholder="Example Description"></textarea>
+                  <textarea rows="3" class="form-control col-sm-11" id="description" name="description" placeholder="Keterangan Produk"></textarea>
                   <div id="description" class="invalid-feedback">
                     {{$errors->first('description')}}
                   </div>

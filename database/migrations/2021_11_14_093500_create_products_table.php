@@ -17,7 +17,7 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('photo');
             $table->string('name');
-            $table->text('description');
+            $table->text('description')->default('-');
             $table->integer('stock');
             $table->integer('price');
             $table->integer('category_id')->unsigned();
