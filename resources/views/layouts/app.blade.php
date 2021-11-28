@@ -24,7 +24,7 @@
     </head>
     <body id="stop-scrolling" class="{{ $class ?? '' }}">
         <div class="preloader">
-            <div class="loading">
+            <div class="loading" id="loading">
                 <img class="prelogo" src="{{asset('public/img/brand/orange.png')}}" alt="">
                 <br>
                 <span></span>
@@ -65,8 +65,8 @@
         <!-- Preloader -->
         <script>
             function preloaderFadeOutInit(){
-                $('.preloader').fadeOut(500);
-                $('body').attr('id','');
+                $('.preloader').fadeOut(1000);
+                $('body').attr('id','stop-scrolling');
                 }
                 // Window load function
                 jQuery(window).on('load', function () {
@@ -75,6 +75,8 @@
                 })(jQuery);
             });
         </script>
+        <script src="{{asset('public/js/pagechange.js')}}"></script>
+
         <script>
             document.body.style.overflow-y = 'hidden';
         </script>

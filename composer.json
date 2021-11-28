@@ -55,10 +55,7 @@
             "dont-discover": []
         }
     },
-    "config": {
-	"platform": {
-        "php": "7.4.0"
-     	},
+    "config": 
 	"platform-check": false,
         "optimize-autoloader": true,
         "preferred-install": "dist",
