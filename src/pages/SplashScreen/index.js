@@ -1,23 +1,23 @@
 import React from 'react'
 import {
     StyleSheet,
-    Text, View
+    View
 } from 'react-native'
-import { AppIcon, WaveIllustration } from '../../assets'
+import { WaveIllustration } from '../../assets'
 import { Colors } from '../../utils'
+import { AppProfile } from '../../components'
+import { StackActions } from '@react-navigation/native'
 
 const SplashScreen = ({ navigation }) => {
 
     setTimeout(() => {
-        navigation.navigate('Home');
-    },
-        3000)
+        navigation.dispatch(StackActions.replace('Login'));
+    }, 3000)
 
     return (
         <View style={styles.wrapper}>
-            <AppIcon />
+            <AppProfile />
             <WaveIllustration style={styles.wave} />
-            <Text style={{ fontSize: 32, fontWeight: 'bold', color: 'white', marginTop: -20 }} >SemkanisaKopsis</Text>
         </View>
     )
 }
@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
     },
     wave: {
         position: 'absolute',
-        bottom: 0
+        bottom: 0,
+        right: 0
     }
 })
