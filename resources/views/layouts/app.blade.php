@@ -9,7 +9,7 @@
 
         <title>{{ config('app.name', 'Semkanisa Kopsis Dashboard') }}</title>
         <!-- Favicon -->
-        <link href="{{ 'public/argon/img/brand/favicon.png' }}" rel="icon" type="image/png">
+        <link class="img-rounded" href="{{ asset('public/img/brand/SemkanisaKopsis-Logo-01.png') }}" rel="icon" type="image/png">
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
         <!-- Extra details for Live View on GitHub Pages -->
@@ -19,8 +19,23 @@
         <link href="{{ asset('public/argon/vendor/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
         <!-- Argon CSS -->
         <link type="text/css" href="{{ asset('public/argon/css/argon.css?v=1.0.0') }}" rel="stylesheet">
+        <!-- preloader -->
+        <link rel="stylesheet" href="{{asset('public/css/preloader.css')}}">
     </head>
-    <body class="{{ $class ?? '' }}">
+    <body id="stop-scrolling" class="{{ $class ?? '' }}">
+        <div class="preloader">
+            <div class="loading">
+                <img class="prelogo" src="{{asset('public/img/brand/orange.png')}}" alt="">
+                <br>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+        </div>
         @auth()
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
@@ -47,6 +62,21 @@
 
         <!-- Argon JS -->
         <script src="{{ asset('public/argon/js/argon.js?v=1.0.0')}}"></script>
-
+        <!-- Preloader -->
+        <script>
+            function preloaderFadeOutInit(){
+                $('.preloader').fadeOut(500);
+                $('body').attr('id','');
+                }
+                // Window load function
+                jQuery(window).on('load', function () {
+                (function ($) {
+                preloaderFadeOutInit();
+                })(jQuery);
+            });
+        </script>
+        <script>
+            document.body.style.overflow-y = 'hidden';
+        </script>
     </body>
 </html>

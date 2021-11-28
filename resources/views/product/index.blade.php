@@ -5,21 +5,21 @@
 @section('content')
 @include('layouts.headers.blank')
     <!-- Header -->
-    <div class="header bg-dark pb-6">
+    <div class="header bg-dark pb-6 mr--4">
       <div class="container-fluid">
         <div class="header-body">
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-              <h6 class="h2 text-white d-inline-block mb-0">Products</h6>
+              <h6 class="h2 text-white d-inline-block mb-0">Produk</h6>
               <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                   <li class="breadcrumb-item" style="color: #f48e5f;"><a href="#"><i class="fas fa-home"></i></a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Products</li>
+                  <li class="breadcrumb-item active" aria-current="page">Produk</li>
                 </ol>
               </nav>
             </div>
             <div class="col-lg-6 col-5 text-right">
-              <a type="button" class="btn btn-sm btn-neutral" data-toggle="modal" data-target="#addNew" title="Create New Product">New</a>
+              <button type="button" class="btn btn-sm p-2 btn-warning" data-toggle="modal" data-target="#addNew" title="Create New Product">Tambah Baru</button>
               <a href="#" class="btn btn-sm btn-neutral">Filters</a>
             </div>
           </div>
@@ -30,22 +30,40 @@
     <div class="container-fluid mt--6">
       <div class="row">
         <div class="col">
-          <div class="card">
+            {{-- @if(Session::has('success'))
+                <div class="alert alert-success">
+                    {{Session::get('success')}}
+                </div>
+            @endif
+            @if(Session::has('error'))
+                <div class="alert alert-danger">
+                    {{Session::get('error')}}
+                </div>
+            @endif --}}
+            @if(Session::has('message'))
+<div class="alert {{ Session::get('alert-class', 'alert-info') }} alert-dismissible fade show">
+    {{ Session::get('message') }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+@endif
+          <div class="card pl-3 pr-3 pb-3">
             <!-- Card header -->
             <div class="card-header border-0">
-              <h3 class="mb-0">Products</h3>
+              <h3 class="mb-0">Produk</h3>
             </div>
             <!-- Light table -->
             <div class="table-responsive">
               <table id="products" class="table table-stripped align-items-center table-flush p-10" style="width:100%">
                 <thead class="thead-light">
                   <tr>
-                    <th scope="col" class="sort" data-sort="name">Name</th>
-                    <th scope="col" class="sort" data-sort="category">Category</th>
-                    <th scope="col">Photo</th>
-                    <th scope="col">Stock</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Description</th>
+                    <th scope="col" class="sort" data-sort="name">Nama</th>
+                    <th scope="col" class="sort" data-sort="category">Katergori</th>
+                    <th scope="col">Gambar</th>
+                    <th scope="col">Stok</th>
+                    <th scope="col">Harga</th>
+                    <th scope="col">Keterangan</th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
@@ -60,7 +78,7 @@
                       </div>
                     </th>
                     <td class="category">
-                      {{$product->category_id}}
+                      {{$product->category}}
                     </td>
                     <td class="photo">
                       <img class="rounded" style="width: 100px;" src="{{$product->photo}}" alt="test">
@@ -69,22 +87,82 @@
                       {{$product->stock}}
                     </td>
                     <td class="price">
-                      {{$product->price}} USD
+                      {{$product->price}} IDR
                     </td>
                     <td class="description">
                       {{$product->description}}
                     </td>
-                    <td class="text-right">
+                    <td class="">
                       <span>
-                        <a class="btn btn-sm btn-icon-only" style="color: #f48e5f;" data-toggle="modal" data-target="#edit">
-                        <img class="img-fluid" src="{{asset('public/img/icons/edit.svg')}}" alt="">
+                        <a class="btn btn-sm btn-icon-only" style="color: #f48e5f;" data-toggle="modal" data-target="#Edit{{$product->id}}">
+                        <img class="img-fluid" src="{{asset('public/img/icons/edit.svg')}}" alt="Ubah">
                         </a>
-                        <a class="btn btn-sm btn-icon-only" onclick="deleted({{$product->id}})" style="color: #f4645f;" data-toggle="modal" data-target="#delete">
-                        <img class="img-fluid" src="{{asset('public/img/icons/trash.svg')}}" alt="">
-                        </a>
+                        <form action="produk/{{$product->id}}/update" method="post">
+                            @csrf
+                            <input style="display: none;" value="1" id="deleted" name="deleted">
+                            <button type="submit" class="btn btn-sm btn-icon-only" onclick="return confirm('Apakah anda yakin ingin menghapus?')" style="color: #f4645f;">
+                            <img class="img-fluid" src="{{asset('public/img/icons/trash.svg')}}" alt="Hapus">
+                        </button>
+                    </form>
                       </span>
                     </td>
                   </tr>
+<!-- Edit Modal -->
+  <div class="modal fade" id="Edit{{$product->id}}" tabindex="-1" aria-labelledby="Edit{{$product->id}}Label" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="Edit{{$product->id}}Label">Add</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form method="POST" enctype="multipart/form-data" action="{{route('product.update',$product->id)}}">
+                @csrf
+                <div class="form-group row">
+                  <label for="name" class="col-sm-2 col-form-label">Nama</label>
+                  <input type="text" class="form-control col-sm-9" id="name" name="name" placeholder="Nama Produk" value="{{$product->name}}" required autofocus>
+                </div>
+                <div class="form-group row">
+                  <label for="category" class="col-sm-2 col-form-label">Kategori</label>
+                  <select id="category" name="category_id" class="form-control col-sm-9" required>
+                    <option value="">Pilih Kategori</option>
+                    <option value="{{$product->category_id}}">test</option>
+                  </select>
+                </div>
+                <div class="form-group row">
+                    <label for="photo" class="col-sm-2 col-form-label">Gambar</label>
+                    <div class="custom-file col-sm-6">
+                      <input accept="image/*" type="file" id="photo" class="custom-file-input form-control" name="photo" value="testtestbrobro" required>
+                      <label class="custom-file-label" for="photo">Pilih Gambar</label>
+                    </div>
+                    <img id="preview" class="rounded ml-5" style="height: 100px;" src="{{$product->photo}}" alt="">
+                    <div id="photo" class="invalid-feedback">
+                        {{$errors->first('photo')}}
+                      </div>
+                  </div>
+                <div class="form-group row">
+                  <label for="stock" class="col-sm-2 col-form-label">Stok</label>
+                  <input type="text" class="form-control col-sm-9" id="stock" name="stock" onkeypress="return isNumberKey(event)" value="{{$product->stock}}"  placeholder="Masukan Jumlah Stok, Contoh: 123" required>
+                </div>
+                <div class="form-group row">
+                  <label for="price" class="col-sm-2 col-form-label">Harga</label>
+                  <input type="text" class="form-control col-sm-9" id="price" name="price" onkeypress="return isNumberKey(event)" value="{{$product->price}}" placeholder="Masukan Harga Produk, Contoh: 2500" required>
+                </div>
+                <div class="form-group">
+                  <label for="description">Keterangan</label>
+                  <textarea rows="3" class="form-control col-sm-11" id="description" name="description" placeholder="Keterangan Produk">{{$product->description}}</textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                <button type="submit" class="btn btn-warning">Simpan Perubahan</button>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
                   @endforeach
                 </tbody>
               </table>
@@ -120,6 +198,75 @@
       </div>
 @include('layouts.footers.auth')
     </div>
+
+    <!-- Add Modal -->
+  <div class="modal fade" id="addNew" tabindex="-2" aria-labelledby="addNewLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addNewLabel">Add</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form method="POST" enctype="multipart/form-data" action="{{route('product.create')}}">
+                @csrf
+                <div class="form-group row">
+                  <label for="name" class="col-sm-2 col-form-label">Nama</label>
+                  <input type="text" class="form-control col-sm-9" id="name" name="name" placeholder="Nama Produk" required autofocus>
+                  <div id="name" class="invalid-feedback">
+                    {{$errors->first('name')}}
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="category_id" class="col-sm-2 col-form-label">Kategori</label>
+                  <select id="category_id" name="category_id" class="form-control col-sm-9" required>
+                    <option value="">Pilih Kategori</option>
+                    <option value="0">test</option>
+                  </select>
+                  <div id="category" class="invalid-feedback">
+                    {{$errors->first('category_id')}}
+                  </div>
+                </div>
+                <div class="form-group row">
+                    <label for="photo" class="col-sm-2 col-form-label">Gambar</label>
+                    <div class="custom-file col-sm-6">
+                      <input accept="image/*" type="file" id="photo" class="custom-file-input form-control" name="photo" value="testtestbrobro" required>
+                      <label class="custom-file-label" for="photo">Pilih Gambar</label>
+                    </div>
+                    <img id="preview" class="rounded ml-5" style="height: 100px;" src="https://dummyimage.com/100x100/111/eee&text=preview" alt="">
+                  </div>
+                <div class="form-group row">
+                  <label for="stock" class="col-sm-2 col-form-label">Stok</label>
+                  <input type="text" class="form-control col-sm-9" id="stock" name="stock" onkeypress="return isNumberKey(event)" placeholder="Masukan Jumlah Stok, Contoh: 123" required>
+                  <div id="stock" class="invalid-feedback">
+                    {{$errors->first('stock')}}
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="price" class="col-sm-2 col-form-label">Harga</label>
+                  <input type="text" class="form-control col-sm-9" id="price" name="price" onkeypress="return isNumberKey(event)" placeholder="Masukan Harga Produk, Contoh: 2500" required>
+                  <div id="price" class="invalid-feedback">
+                    {{$errors->first('price')}}
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="description">Keterangan</label>
+                  <textarea rows="3" class="form-control col-sm-11" id="description" name="description" placeholder="Keterangan Produk"></textarea>
+                  <div id="description" class="invalid-feedback">
+                    {{$errors->first('description')}}
+                  </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                <button type="submit" class="btn btn-warning">Tambah</button>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
 @endsection
 
 @push('js')
@@ -163,88 +310,5 @@ photo.onchange = evt => {
 				return true;
 			}
 </script>
-<script>
-    function deleted(id) {
-        document.getElementById("deleted").action = "product/"+id+"/delete";
-    }
-</script>
 @endpush
 
-  <!-- Add Modal -->
-  <div class="modal fade" id="addNew" tabindex="-1" aria-labelledby="addNewLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addNewLabel">Add</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <form method="POST" action="product/create">
-                @csrf
-                <div class="form-group row">
-                  <label for="name" class="col-sm-2 col-form-label">Name</label>
-                  <input type="text" class="form-control col-sm-9" id="name" name="name" placeholder="Example Name" required autofocus>
-                </div>
-                <div class="form-group row">
-                  <label for="category" class="col-sm-2 col-form-label">Category</label>
-                  <select id="category" name="category_id" class="form-control col-sm-9">
-                    <option>Category</option>
-                    <option value="0">test</option>
-                  </select>
-                </div>
-                <div class="form-group row">
-                    <label for="photo" class="col-sm-2 col-form-label">Photo</label>
-                    <div class="custom-file col-sm-6">
-                      <input accept="image/*" type="file" id="photo" multiple class="custom-file-input form-control" name="photo" value="testtestbrobro">
-                      <label class="custom-file-label" for="photo">Choose image</label>
-                    </div>
-                    <img id="preview" class="rounded ml-5" style="height: 100px;" src="https://dummyimage.com/100x100/111/eee&text=preview" alt="">
-                  </div>
-                <div class="form-group row">
-                  <label for="stock" class="col-sm-2 col-form-label">Stock</label>
-                  <input type="text" class="form-control col-sm-9" id="stock" name="stock" onkeypress="return isNumberKey(event)" placeholder="1234" required>
-                </div>
-                <div class="form-group row">
-                  <label for="price" class="col-sm-2 col-form-label">Price</label>
-                  <input type="text" class="form-control col-sm-9" id="price" name="price" onkeypress="return isNumberKey(event)" placeholder="1234" required>
-                </div>
-                <div class="form-group">
-                  <label for="description">Description</label>
-                  <textarea rows="3" class="form-control col-sm-11" id="description" name="description" placeholder="Example Description"></textarea>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-warning">Add</button>
-            </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Delete Modal -->
-<div class="modal fade" id="delete" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="deleteLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="deleteLabel">Delete</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <h1>Are You Sure?</h1>
-        </div>
-        <div class="modal-footer">
-            <form method="POST" action="product/delete">
-                @csrf
-                <input style="display: none;" name="deleted" id="deleted" value="1">
-                <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
-        </div>
-      </div>
-    </div>
-  </div>

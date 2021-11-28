@@ -1,5 +1,5 @@
-**<h2 align="center"><a href="https://" target="_blank"><img src="https://" width="400"></a>Semkaisa Kopsis</h2>**
-<h3 align="center">Backend & API</h3>
+**<h2 align="center"><a href="" target="_blank"><img src="public/img/brand/orange.png" max-width="400"></a>Backend & API</h2>**
+<h3 align="center"></h3>
 
 ### **About Semkanisa Kopsis Backend & API**
 
