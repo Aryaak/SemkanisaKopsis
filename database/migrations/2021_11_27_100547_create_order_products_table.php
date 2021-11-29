@@ -21,6 +21,10 @@ class CreateOrderProductsTable extends Migration
             $table->boolean('deleted')->default(0);
             $table->timestamps();
         });
+        Schema::table('order_products', function (Blueprint $table) {
+            $table->foreign('order_id')->references('id')->on('orders');
+            $table->foreign('product_id')->references('id')->on('products');
+        });
     }
 
     /**

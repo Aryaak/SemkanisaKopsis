@@ -22,6 +22,11 @@ class CreateOrdersTable extends Migration
             $table->boolean('deleted')->default(0);
             $table->timestamps();
         });
+        Schema::table('ordrs', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('status_id')->references('id')->on('statuses');
+            $table->foreign('payment_id')->references('id')->on('payments');
+        });
     }
 
     /**
