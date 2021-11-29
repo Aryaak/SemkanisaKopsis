@@ -17,7 +17,7 @@ class CreateOrderProductsTable extends Migration
             $table->id();
             $table->integer('order_id');
             $table->integer('product_id');
-            $table->integer('qyt');
+            $table->integer('qty');
             $table->boolean('deleted')->default(0);
             $table->timestamps();
         });
