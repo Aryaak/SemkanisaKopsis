@@ -78,19 +78,39 @@
             </form>
             <!-- Navigation -->
             <ul class="navbar-nav">
-                <li class="nav-item">
+                <li class="nav-item" id="home">
                     <a class="nav-link" href="{{ route('home') }}">
                         <i class="ni ni-tv-2 text-warning"></i> {{ __('Dashboard') }}
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" id="product">
                     <a class="nav-link" href="{{ route('products') }}">
                         <i class="ni ni-planet text-blue"></i> {{ __('Produk') }}
                     </a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item" id="category">
                     <a class="nav-link" href="{{ route('categories') }}">
                         <i class="ni ni-pin-3 text-orange"></i> {{ __('Kategori') }}
+                    </a>
+                </li>
+                <li class="nav-item" id="order">
+                    <a class="nav-link" href="{{ route('orders') }}">
+                        <i class="ni ni-pin-3 text-orange"></i> {{ __('Order') }}
+                    </a>
+                </li>
+                <li class="nav-item" id="orderProduct">
+                    <a class="nav-link" href="{{ route('orderProducts') }}">
+                        <i class="ni ni-pin-3 text-orange"></i> {{ __('Produk Order') }}
+                    </a>
+                </li>
+                <li class="nav-item" id="payment">
+                    <a class="nav-link" href="{{ route('payments') }}">
+                        <i class="ni ni-planet text-blue"></i> {{ __('Pembayaran') }}
+                    </a>
+                </li>
+                <li class="nav-item" id="status">
+                    <a class="nav-link" href="{{ route('statuses') }}">
+                        <i class="ni ni-planet text-blue"></i> {{ __('Status') }}
                     </a>
                 </li>
                 <li class="nav-item">

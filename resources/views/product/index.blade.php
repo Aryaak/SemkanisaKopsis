@@ -41,13 +41,13 @@
                 </div>
             @endif --}}
             @if(Session::has('message'))
-<div class="alert {{ Session::get('alert-class', 'alert-info') }} alert-dismissible fade show">
-    {{ Session::get('message') }}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
-@endif
+            <div class="alert {{ Session::get('alert-class', 'alert-info') }} alert-dismissible fade show">
+                {{ Session::get('message') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @endif
           <div class="card pl-3 pr-3 pb-3">
             <!-- Card header -->
             <div class="card-header border-0">
@@ -58,18 +58,23 @@
               <table id="products" class="table table-stripped align-items-center table-flush p-10" style="width:100%">
                 <thead class="thead-light">
                   <tr>
+                    <th scope="col" class="sort" data-sort="id">ID</th>
                     <th scope="col" class="sort" data-sort="name">Nama</th>
                     <th scope="col" class="sort" data-sort="category">Katergori</th>
                     <th scope="col">Gambar</th>
                     <th scope="col">Stok</th>
                     <th scope="col">Harga</th>
                     <th scope="col">Keterangan</th>
-                    <th scope="col"></th>
+                    <th scope="col">aksi</th>
                   </tr>
                 </thead>
                 <tbody class="list">
                     @foreach ($product as $product)
                   <tr>
+                    <td class="id">
+                      {{$product->id}}
+                    </td>
+                    <td class="photo">
                     <th scope="row">
                       <div class="media align-items-center">
                         <div class="media-body">
@@ -89,22 +94,20 @@
                     <td class="price">
                       {{$product->price}} IDR
                     </td>
-                    <td class="description">
+                    <td class="text-break description">
                       {{$product->description}}
                     </td>
-                    <td class="">
-                      <span>
+                    <td class="text-right">
                         <a class="btn btn-sm btn-icon-only" style="color: #f48e5f;" data-toggle="modal" data-target="#Edit{{$product->id}}">
                         <img class="img-fluid" src="{{asset('public/img/icons/edit.svg')}}" alt="Ubah">
                         </a>
-                        <form action="produk/{{$product->id}}/update" method="post">
+                        <form action="{{route('product.update',$product->id)}}" method="post">
                             @csrf
                             <input style="display: none;" value="1" id="deleted" name="deleted">
                             <button type="submit" class="btn btn-sm btn-icon-only" onclick="return confirm('Apakah anda yakin ingin menghapus?')" style="color: #f4645f;">
                             <img class="img-fluid" src="{{asset('public/img/icons/trash.svg')}}" alt="Hapus">
                         </button>
                     </form>
-                      </span>
                     </td>
                   </tr>
 <!-- Edit Modal -->

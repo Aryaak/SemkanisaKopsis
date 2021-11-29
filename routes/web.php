@@ -23,6 +23,7 @@ Route::get('/admin', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
 Route::group(['prefix' => 'produk','middleware' => 'auth'], function() {
     Route::get('/', 'ProductController@index')->name('products');
     Route::post('/create', 'ProductController@create')->name('product.create');
@@ -35,6 +36,34 @@ Route::group(['prefix' => 'kategori','middleware' => 'auth'], function() {
     Route::post('/create', 'CategoryController@create')->name('category.create');
     Route::get('/{id}/edit', 'CategoryController@edit')->name('category.edit');
     Route::post('/{id}/update', 'CategoryController@update')->name('category.update');
+});
+
+Route::group(['prefix' => 'order','middleware' => 'auth'], function() {
+    Route::get('/', 'OrderController@index')->name('orders');
+    Route::post('/create', 'OrderController@create')->name('order.create');
+    Route::get('/{id}/edit', 'OrderController@edit')->name('order.edit');
+    Route::post('/{id}/update', 'OrderController@update')->name('order.update');
+});
+
+Route::group(['prefix' => 'produkOrder','middleware' => 'auth'], function() {
+    Route::get('/', 'OrderProductsController@index')->name('orderProducts');
+    Route::post('/create', 'OrderProductsController@create')->name('orderProducts.create');
+    Route::get('/{id}/edit', 'OrderProductsController@edit')->name('orderProducts.edit');
+    Route::post('/{id}/update', 'OrderProductsController@update')->name('orderProducts.update');
+});
+
+Route::group(['prefix' => 'pembayaran','middleware' => 'auth'], function() {
+    Route::get('/', 'PaymentController@index')->name('payments');
+    Route::post('/create', 'PaymentController@create')->name('payment.create');
+    Route::get('/{id}/edit', 'PaymentController@edit')->name('payment.edit');
+    Route::post('/{id}/update', 'PaymentController@update')->name('payment.update');
+});
+
+Route::group(['prefix' => 'status','middleware' => 'auth'], function() {
+    Route::get('/', 'StatusController@index')->name('statuses');
+    Route::post('/create', 'StatusController@create')->name('status.create');
+    Route::get('/{id}/edit', 'StatusController@edit')->name('status.edit');
+    Route::post('/{id}/update', 'StatusController@update')->name('status.update');
 });
 
 Route::group(['middleware' => 'auth'], function () {
