@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Payment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Exception;
 
 class PaymentController extends Controller
 {
@@ -25,8 +27,17 @@ class PaymentController extends Controller
      */
     public function create(Payment $payment,Request $request)
     {
+        try{
         $payment->create($request->all());
-        return redirect()->route('payments')->withSuccess(__('Product created successfully.'));
+        }catch(Exception $e){
+            Session::flash('message', $e);
+            Session::flash('alert-class', 'alert-danger');
+            return redirect()->route('products');
+        }
+        Session::flash('message', 'Produk berhasil dibuat');
+        Session::flash('alert-class', 'alert-success');
+        return redirect()->route('categories');
+        return redirect()->route('payments');
     }
 
     /**
@@ -50,8 +61,16 @@ class PaymentController extends Controller
      */
     public function update(Request $request, Payment $payment,$id)
     {
+        try{
         $payment = Payment::find($id);
         $payment->update($request->all());
-        return redirect()->route('payments')->withSuccess(__('payment updated successfully.'));
+        }catch(Exception $e){
+            Session::flash('message', $e);
+            Session::flash('alert-class', 'alert-danger');
+            return redirect()->route('products');
+        }
+        Session::flash('message', 'Produk berhasil diubah');
+        Session::flash('alert-class', 'alert-warning');
+        return redirect()->route('payments');
     }
 }

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Status;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Exception;
 
 class StatusController extends Controller
 {
@@ -25,8 +27,16 @@ class StatusController extends Controller
      */
     public function create(Status $status,Request $request)
     {
+        try{
         $status->create($request->all());
-        return redirect()->route('statuses')->withSuccess(__('Product created successfully.'));
+        }catch(Exception $e){
+            Session::flash('message', $e);
+            Session::flash('alert-class', 'alert-danger');
+            return redirect()->route('products');
+        }
+        Session::flash('message', 'Produk berhasil dibuat');
+        Session::flash('alert-class', 'alert-success');
+        return redirect()->route('statuses');
     }
 
     /**
@@ -50,8 +60,16 @@ class StatusController extends Controller
      */
     public function update(Request $request, Status $status,$id)
     {
+        try{
         $status = Status::find($id);
         $status->update($request->all());
-        return redirect()->route('statuses')->withSuccess(__('status updated successfully.'));
+        }catch(Exception $e){
+            Session::flash('message', $e);
+            Session::flash('alert-class', 'alert-danger');
+            return redirect()->route('products');
+        }
+        Session::flash('message', 'Produk berhasil diubah');
+        Session::flash('alert-class', 'alert-warning');
+        return redirect()->route('statuses');
     }
 }

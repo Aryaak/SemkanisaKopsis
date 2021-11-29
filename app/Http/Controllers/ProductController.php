@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Exception;
 
 class CategoryController extends Controller
 {
@@ -25,8 +27,16 @@ class CategoryController extends Controller
      */
     public function create(Category $category,Request $request)
     {
+        try{
         $category->create($request->all());
-        return redirect()->route('categories')->withSuccess(__('Product created successfully.'));
+        }catch(Exception $e){
+            Session::flash('message', $e);
+            Session::flash('alert-class', 'alert-danger');
+            return redirect()->route('products');
+        }
+        Session::flash('message', 'Kategori berhasil dibuat');
+        Session::flash('alert-class', 'alert-success');
+        return redirect()->route('categories');
     }
 
     /**
@@ -50,8 +60,16 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category,$id)
     {
+        try{
         $category = Category::find($id);
         $category->update($request->all());
-        return redirect()->route('categories')->withSuccess(__('category updated successfully.'));
+        }catch(Exception $e){
+            Session::flash('message', $e);
+            Session::flash('alert-class', 'alert-danger');
+            return redirect()->route('products');
+        }
+        Session::flash('message', 'Kategori berhasil diubah');
+        Session::flash('alert-class', 'alert-warning');
+        return redirect()->route('categories');
     }
 }
