@@ -99,13 +99,13 @@
                     </td>
                     <td class="text-right">
                         <a class="btn btn-sm btn-icon-only" style="color: #f48e5f;" data-toggle="modal" data-target="#Edit{{$product->id}}">
-                        <img class="img-fluid" src="{{asset('public/img/icons/edit.svg')}}" alt="Ubah">
+                        <img class="img-fluid" src="{{asset('img/icons/edit.svg')}}" alt="Ubah">
                         </a>
                         <form action="{{route('product.update',$product->id)}}" method="post">
                             @csrf
                             <input style="display: none;" value="1" id="deleted" name="deleted">
                             <button type="submit" class="btn btn-sm btn-icon-only" onclick="return confirm('Apakah anda yakin ingin menghapus?')" style="color: #f4645f;">
-                            <img class="img-fluid" src="{{asset('public/img/icons/trash.svg')}}" alt="Hapus">
+                            <img class="img-fluid" src="{{asset('img/icons/trash.svg')}}" alt="Hapus">
                         </button>
                     </form>
                     </td>
@@ -273,17 +273,17 @@
 @endsection
 
 @push('js')
-    <script src="{{ asset('public/argon/vendor/chart.js/dist/Chart.min.js')}}"></script>
-    <script src="{{ asset('public/argon/vendor/chart.js/dist/Chart.extension.js')}}"></script>
+    <script src="{{ asset('argon/vendor/chart.js/dist/Chart.min.js')}}"></script>
+    <script src="{{ asset('argon/vendor/chart.js/dist/Chart.extension.js')}}"></script>
      <!-- Argon Scripts -->
   <!-- Core -->
-<script src="{{asset('public/argon/vendor/jquery/dist/jquery.min.js')}}"></script>
-<script src="{{asset('public/argon/vendor/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
-<script src="{{asset('public/argon/vendor/js-cookie/js.cookie.js')}}"></script>
-<script src="{{asset('public/argon/vendor/jquery.scrollbar/jquery.scrollbar.min.js')}}"></script>
-<script src="{{asset('public/argon/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js')}}"></script>
+<script src="{{asset('argon/vendor/jquery/dist/jquery.min.js')}}"></script>
+<script src="{{asset('argon/vendor/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{asset('argon/vendor/js-cookie/js.cookie.js')}}"></script>
+<script src="{{asset('argon/vendor/jquery.scrollbar/jquery.scrollbar.min.js')}}"></script>
+<script src="{{asset('argon/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js')}}"></script>
 <!-- Argon JS -->
-<script src="{{asset('public/argon/js/argon.js?v=1.2.0')}}"></script>
+<script src="{{asset('argon/js/argon.js?v=1.2.0')}}"></script>
 <!-- DataTable -->
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
