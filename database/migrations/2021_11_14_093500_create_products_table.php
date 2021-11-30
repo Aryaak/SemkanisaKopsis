@@ -20,13 +20,12 @@ class CreateProductsTable extends Migration
             $table->text('description');
             $table->integer('stock');
             $table->integer('price');
-            $table->integer('category_id')->unsigned();
+            $table->biginteger('category_id')->unsigned();
             $table->boolean('deleted')->default(0);
             $table->timestamps();
+
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
-        Schema::table('products', function (Blueprint $table) {
-        $table->foreign('category_id')->references('id')->on('categories');
-    });
     }
 
     /**

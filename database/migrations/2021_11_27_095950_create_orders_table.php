@@ -15,17 +15,17 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('status_id')->default(1);
-            $table->integer('payment_id');
-            $table->integer('total');
+            $table->biginteger('user_id')->unsigned();
+            $table->biginteger('status_id')->unsigned()->default(1);
+            $table->biginteger('payment_id')->unsigned();
+            $table->biginteger('total');
             $table->boolean('deleted')->default(0);
             $table->timestamps();
         });
-        Schema::table('ordrs', function (Blueprint $table) {
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('status_id')->references('id')->on('statuses');
-            $table->foreign('payment_id')->references('id')->on('payments');
+        Schema::table('orders', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users')->ondelete('cascade');
+            $table->foreign('status_id')->references('id')->on('statuses')->ondelete('cascade');
+            $table->foreign('payment_id')->references('id')->on('payments')->ondelete('cascade');
         });
     }
 
