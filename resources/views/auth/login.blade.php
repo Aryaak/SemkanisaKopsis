@@ -63,6 +63,7 @@
                                     <span class="text-muted">{{ __('Remember me') }}</span>
                                 </label>
                             </div>
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                             <div class="text-center">
                                 <button type="submit" class="btn btn-warning my-4">{{ __('Sign in') }}</button>
                             </div>

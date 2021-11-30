@@ -104,6 +104,7 @@
                         <form action="{{route('product.update',$product->id)}}" method="post">
                             @csrf
                             <input style="display: none;" value="1" id="deleted" name="deleted">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                             <button type="submit" class="btn btn-sm btn-icon-only" onclick="return confirm('Apakah anda yakin ingin menghapus?')" style="color: #f4645f;">
                             <img class="img-fluid" src="{{asset('public/img/icons/trash.svg')}}" alt="Hapus">
                         </button>
@@ -157,6 +158,7 @@
                   <label for="description">Keterangan</label>
                   <textarea rows="3" class="form-control col-sm-11" id="description" name="description" placeholder="Keterangan Produk">{{$product->description}}</textarea>
                 </div>
+                <input type="hidden" name="_token" value="{{ csrf_token() }}" />
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
@@ -261,6 +263,7 @@
                     {{$errors->first('description')}}
                   </div>
                 </div>
+                <input type="hidden" name="_token" value="{{ csrf_token() }}" />
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
