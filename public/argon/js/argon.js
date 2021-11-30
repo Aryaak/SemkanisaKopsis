@@ -206,8 +206,7 @@ var Headroom = (function() {
 	if ($headroom.length) {
 		headroom.init();
 	}
-
-})();
+}})();
 
 //
 // Navbar
