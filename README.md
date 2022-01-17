@@ -10,7 +10,8 @@ Nothing for now
 
 ### **Backend**
 
-backend
+- Template used, [Argon](https://www.creative-tim.com/product/argon-dashboard-laravel).
+  Argon is a free Dashboard template made by [Creative Tim](https://creative-tim.com/), licensed with [MIT License](https://github.com/timcreative/freebies/blob/master/LICENSE.md).
 
 ### **Made by**
 
