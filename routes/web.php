@@ -46,10 +46,10 @@ Route::group(['prefix' => 'order','middleware' => 'auth'], function() {
 });
 
 Route::group(['prefix' => 'produkOrder','middleware' => 'auth'], function() {
-    Route::get('/', 'OrderProductsController@index')->name('orderProducts');
-    Route::post('/create', 'OrderProductsController@create')->name('orderProducts.create');
-    Route::get('/{id}/edit', 'OrderProductsController@edit')->name('orderProducts.edit');
-    Route::post('/{id}/update', 'OrderProductsController@update')->name('orderProducts.update');
+    Route::get('/', 'OrderProductController@index')->name('orderProducts');
+    Route::post('/create', 'OrderProductController@create')->name('orderProducts.create');
+    Route::get('/{id}/edit', 'OrderProductController@edit')->name('orderProducts.edit');
+    Route::post('/{id}/update', 'OrderProductController@update')->name('orderProducts.update');
 });
 
 Route::group(['prefix' => 'pembayaran','middleware' => 'auth'], function() {

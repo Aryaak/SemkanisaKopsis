@@ -83,7 +83,7 @@
                       </div>
                     </th>
                     <td class="category">
-                      {{$product->category}}
+                      {{$product->category_id}}
                     </td>
                     <td class="photo">
                       <img class="rounded" style="width: 100px;" src="{{$product->photo}}" alt="test">
