@@ -1,0 +1,82 @@
+body {
+    overflow-y: hidden; /* Hide vertical scrollbar */
+}
+
+.preloader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom:0;
+    right:0;
+    width: 100%;
+    height: 100vh;
+    z-index: 99999999;
+    background: #333;
+    text-align: center;
+    padding: 20%;
+}
+#stop-scrolling {
+    height: 100% !important;
+    overflow: hidden !important;
+}
+.prelogo {
+margin: 0;
+max-width: 150px;
+}
+
+/*
+* Loading Dots
+* Can we use pseudo elements here instead :after?
+*/
+.loading span {
+display: inline-block;
+vertical-align: middle;
+width: .6em;
+height: .6em;
+margin: .19em;
+background: #eeeee1;
+border-radius: .6em;
+animation: loading 1s infinite alternate;
+}
+
+/*
+* Dots Colors
+* Smarter targeting vs nth-of-type?
+*/
+.loading span:nth-of-type(2) {
+background: #eeeee2;
+animation-delay: 0.2s;
+}
+.loading span:nth-of-type(3) {
+background: #eeeee3;
+animation-delay: 0.4s;
+}
+.loading span:nth-of-type(4) {
+background: #eeeee4;
+animation-delay: 0.6s;
+}
+.loading span:nth-of-type(5) {
+background: #eeeee5;
+animation-delay: 0.8s;
+}
+.loading span:nth-of-type(6) {
+background: #eeeee6;
+animation-delay: 1.0s;
+}
+.loading span:nth-of-type(7) {
+background: #eeeee7;
+animation-delay: 1.2s;
+}
+
+/*
+* Animation keyframes
+* Use transition opacity instead of keyframes?
+*/
+@keyframes loading {
+0% {
+opacity: 0;
+}
+100% {
+opacity: 1;
+}
+}
