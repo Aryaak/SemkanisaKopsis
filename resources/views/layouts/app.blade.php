@@ -65,7 +65,7 @@
         <!-- Preloader -->
         <script>
             function preloaderFadeOutInit(){
-                $('.preloader').fadeOut(1000);
+                $('.preloader').fadeOut(700);
                 $('body').attr('id','stop-scrolling');
                 }
                 // Window load function

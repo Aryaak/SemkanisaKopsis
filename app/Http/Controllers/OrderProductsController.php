@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Exception;
 
-class OrderProductController extends Controller
+class OrderProductsController extends Controller
 {
             /**
      * Display a listing of the resource.
@@ -70,6 +70,6 @@ class OrderProductController extends Controller
         }
         Session::flash('message', 'orderproduct berhasil diubah');
         Session::flash('alert-class', 'alert-warning');
-        return redirect()->route('categories');
+        return redirect()->route('orderProduk');
     }
 }

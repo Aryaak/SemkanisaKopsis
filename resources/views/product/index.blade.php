@@ -74,7 +74,7 @@
                     <td class="id">
                       {{$product->id}}
                     </td>
-                    <td class="photo">
+
                     <th scope="row">
                       <div class="media align-items-center">
                         <div class="media-body">
@@ -83,10 +83,10 @@
                       </div>
                     </th>
                     <td class="category">
-                      {{$product->category}}
+                        {{$product->category_id}}
                     </td>
                     <td class="photo">
-                      <img class="rounded" style="width: 100px;" src="{{$product->photo}}" alt="test">
+                      <img class="rounded" style="width: 100px;" src="{{asset('storage/'.$product->photo)}}" alt="test">
                     </td>
                     <td class="stock">
                       {{$product->stock}}
@@ -116,7 +116,7 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="Edit{{$product->id}}Label">Add</h5>
+          <h5 class="modal-title" id="Edit{{$product->id}}Label">Edit</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -228,7 +228,9 @@
                   <label for="category_id" class="col-sm-2 col-form-label">Kategori</label>
                   <select id="category_id" name="category_id" class="form-control col-sm-9" required>
                     <option value="">Pilih Kategori</option>
-                    <option value="0">test</option>
+                    @foreach ($categories as $item)
+                    <option value="{{$item->id}}">{{$item->name}}</option>
+                    @endforeach
                   </select>
                   <div id="category" class="invalid-feedback">
                     {{$errors->first('category_id')}}
