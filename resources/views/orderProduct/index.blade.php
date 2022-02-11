@@ -1,7 +1,4 @@
 @extends('layouts.app')
-<head>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css">
-</head>
 @section('content')
 @include('layouts.headers.blank')
     <!-- Header -->
@@ -41,7 +38,6 @@
           <div class="card pl-3 pr-3 pb-3">
             <!-- Card header -->
             <div class="card-header border-0">
-              <h3 class="mb-0">orderproduct</h3>
             </div>
             <!-- Light table -->
             <div class="table-responsive">

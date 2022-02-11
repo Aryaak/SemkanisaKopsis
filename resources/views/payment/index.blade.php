@@ -1,7 +1,4 @@
 @extends('layouts.app')
-<head>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css">
-</head>
 @section('content')
 @include('layouts.headers.blank')
     <!-- Header -->
@@ -41,7 +38,6 @@
           <div class="card pl-3 pr-3 pb-3">
             <!-- Card header -->
             <div class="card-header border-0">
-              <h3 class="mb-0">Pembayaran</h3>
             </div>
             <!-- Light table -->
             <div class="table-responsive">
@@ -67,16 +63,22 @@
                       </div>
                     </th>
                     <td class="text-right">
-                        <a class="btn btn-sm btn-icon-only" style="color: #f48e5f;" data-toggle="modal" data-target="#Edit{{$payment->id}}">
-                        <img class="img-fluid" src="{{asset('img/icons/edit.svg')}}" alt="Ubah">
-                        </a>
-                        <form action="{{route('payment.delete',$payment->id)}}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-icon-only" onclick="return confirm('Apakah anda yakin ingin menghapus?')" style="color: #f4645f;">
-                            <img class="img-fluid" src="{{asset('img/icons/trash.svg')}}" alt="Hapus">
-                        </button>
-                    </form>
+                        <div class="row">
+                            <a class="btn btn-sm btn-icon-only" style="color: #f48e5f;" data-toggle="modal" data-target="#Edit{{$payment->id}}">
+                            <img class="img-fluid" src="{{asset('img/icons/edit.svg')}}" alt="Ubah">
+                            UBAH
+                            </a>
+                        </div>
+                        <div class="row">
+                            <form action="{{route('payment.delete',$payment->id)}}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-icon-only" onclick="return confirm('Apakah anda yakin ingin menghapus?')" style="color: #f4645f;">
+                                <img class="img-fluid" src="{{asset('img/icons/trash.svg')}}" alt="Hapus">
+                                HAPUS
+                            </button>
+                            </form>
+                        </div>
                     </td>
                   </tr>
                   <!-- Edit Modal -->

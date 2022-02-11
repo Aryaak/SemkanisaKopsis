@@ -1,7 +1,4 @@
 @extends('layouts.app')
-<head>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css">
-</head>
 @section('content')
 @include('layouts.headers.blank')
     <!-- Header -->
@@ -51,7 +48,6 @@
           <div class="card pl-3 pr-3 pb-3">
             <!-- Card header -->
             <div class="card-header border-0">
-              <h3 class="mb-0">Produk</h3>
             </div>
             <!-- Light table -->
             <div class="table-responsive">
@@ -103,16 +99,22 @@
                       {{$product->description}}
                     </td>
                     <td class="text-right">
-                        <a class="btn btn-sm btn-icon-only" style="color: #f48e5f;" data-toggle="modal" data-target="#Edit{{$product->id}}">
-                        <img class="img-fluid" src="{{asset('img/icons/edit.svg')}}" alt="Ubah">
-                        </a>
-                        <form action="{{route('product.delete',$product->id)}}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-icon-only" onclick="return confirm('Apakah anda yakin ingin menghapus?')" style="color: #f4645f;">
-                            <img class="img-fluid" src="{{asset('img/icons/trash.svg')}}" alt="Hapus">
-                        </button>
-                    </form>
+                        <div class="row">
+                            <a class="btn btn-sm btn-icon-only" style="color: #f48e5f;" data-toggle="modal" data-target="#Edit{{$product->id}}">
+                            <img class="img-fluid" src="{{asset('img/icons/edit.svg')}}" alt="Ubah">
+                            UBAH
+                            </a>
+                        </div>
+                        <div class="row">
+                            <form action="{{route('product.delete',$product->id)}}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-icon-only" onclick="return confirm('Apakah anda yakin ingin menghapus?')" style="color: #f4645f;">
+                                <img class="img-fluid" src="{{asset('img/icons/trash.svg')}}" alt="Hapus">
+                                HAPUS
+                            </button>
+                            </form>
+                        </div>
                     </td>
                   </tr>
 <!-- Edit Modal -->
@@ -221,6 +223,7 @@
         <div class="modal-body">
             <form method="POST" enctype="multipart/form-data" action="{{route('product.create')}}">
                 @csrf
+                <link rel="stylesheet" href="{{asset('css/preloader.css')}}">
                 <div class="form-group row">
                   <label for="name" class="col-sm-2 col-form-label">Nama</label>
                   <input type="text" class="form-control col-sm-9" id="name" name="name" placeholder="Nama Produk" required autofocus>

@@ -21,6 +21,8 @@
         <link type="text/css" href="{{ asset('argon/css/argon.css?v=1.0.0') }}" rel="stylesheet">
         <!-- preloader -->
         <link rel="stylesheet" href="{{asset('css/preloader.css')}}">
+        <!-- DataTable -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.11.4/b-2.2.2/b-colvis-2.2.2/b-html5-2.2.2/r-2.2.9/datatables.min.css"/>
     </head>
     <body id="stop-scrolling" class="{{ $class ?? '' }}">
         <div class="preloader">
@@ -37,10 +39,12 @@
               </div>
         </div>
         @auth()
+            @if (Route::currentRouteName() != 'welcome')
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
             </form>
             @include('layouts.navbars.sidebar')
+            @endif
         @endauth
 
         <div class="main-content" id="panel">
@@ -59,8 +63,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
 
         <!-- DataTable -->
-        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
-        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.11.4/b-2.2.2/b-colvis-2.2.2/b-html5-2.2.2/r-2.2.9/datatables.min.js"></script>
 
 
         @stack('js')
@@ -80,7 +83,12 @@
                 })(jQuery);
             });
         </script>
+        <script>
+            $.extend(true, $.fn.dataTable.defaults.oLanguage.oPaginate, {
+                sNext: '<i class="fa fa-chevron-right" ></i>',
+                sPrevious: '<i class="fa fa-chevron-left" ></i>'
+            });
+        </script>
         {{-- <script src="{{asset('js/toRupiah.js')}}"></script> --}}
-        {{-- <script src="{{asset('js/pagechange.js')}}"></script> --}}
     </body>
 </html>
