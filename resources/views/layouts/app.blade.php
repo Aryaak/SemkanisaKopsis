@@ -58,6 +58,11 @@
         {{-- <script src="{{ asset('argon/vendor/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script> --}}
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
 
+        <!-- DataTable -->
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+
+
         @stack('js')
 
         <!-- Argon JS -->
@@ -76,6 +81,6 @@
             });
         </script>
         {{-- <script src="{{asset('js/toRupiah.js')}}"></script> --}}
-        <script src="{{asset('js/pagechange.js')}}"></script>
+        {{-- <script src="{{asset('js/pagechange.js')}}"></script> --}}
     </body>
 </html>

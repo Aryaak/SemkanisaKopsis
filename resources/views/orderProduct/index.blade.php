@@ -19,7 +19,7 @@
               </nav>
             </div>
             <div class="col-lg-6 col-5 text-right">
-              <button type="button" class="btn btn-sm p-2 btn-warning" data-toggle="modal" data-target="#addNew" title="Create New orderproduct">Tambah Baru</button>
+              {{-- <button type="button" class="btn btn-sm p-2 btn-warning" data-toggle="modal" data-target="#addNew" title="Create New orderproduct">Tambah Baru</button> --}}
               <a href="#" class="btn btn-sm btn-neutral">Filters</a>
             </div>
           </div>
@@ -114,78 +114,18 @@
       </div>
 @include('layouts.footers.auth')
     </div>
-
-    <!-- Add Modal -->
-  <div class="modal fade" id="addNew" tabindex="-1" aria-labelledby="addNewLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addNewLabel">Add</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <form method="POST" action="{{route('orderproduct.create')}}">
-                @csrf
-                <div class="form-group row">
-                  <label for="name" class="col-sm-2 col-form-label">Nama</label>
-                  <input type="text" class="form-control col-sm-9" id="name" name="name" placeholder="Masukan Nama orderproduct, contoh: Pending, Success" required autofocus>
-                  <div id="name" class="invalid-feedback">
-                    {{$errors->first('name')}}
-                  </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                <button type="submit" class="btn btn-warning">Tambah</button>
-            </form>
-        </div>
-      </div>
-    </div>
-  </div>
 @endsection
 
 @push('js')
-    <script src="{{ asset('public/argon/vendor/chart.js/dist/Chart.min.js')}}"></script>
-    <script src="{{ asset('public/argon/vendor/chart.js/dist/Chart.extension.js')}}"></script>
-     <!-- Argon Scripts -->
-  <!-- Core -->
-<script src="{{asset('public/argon/vendor/jquery/dist/jquery.min.js')}}"></script>
-<script src="{{asset('public/argon/vendor/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
-<script src="{{asset('public/argon/vendor/js-cookie/js.cookie.js')}}"></script>
-<script src="{{asset('public/argon/vendor/jquery.scrollbar/jquery.scrollbar.min.js')}}"></script>
-<script src="{{asset('public/argon/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js')}}"></script>
-<!-- Argon JS -->
-<script src="{{asset('public/argon/js/argon.js?v=1.2.0')}}"></script>
-<!-- DataTable -->
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
-
 <script>
     $(document).ready( function () {
-    $('#orderproducts').DataTable();
+    $('#orderproducts').DataTable({
+        "language":{
+            "url":"https://cdn.datatables.net/plug-ins/1.11.4/i18n/id.json",
+        }
+    });
 } );
 </script>
 
-<script type="text/javascript">
-photo.onchange = evt => {
-  const [file] = photo.files
-  if (file) {
-    preview.src = URL.createObjectURL(file);
-    photo.files = URL.createObjectURL(file);
-  }
-}
-</script>
-<script>
-    function isNumberKey(evt)
-			{
-				var charCode = (evt.which) ? evt.which : evt.keyCode;
-				if (charCode != 46 && charCode > 31
-				&& (charCode < 48 || charCode > 57))
-				return false;
-				return true;
-			}
-</script>
 @endpush
 

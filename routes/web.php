@@ -44,14 +44,14 @@ Route::group(['prefix' => 'order', 'middleware' => 'auth'], function () {
     Route::get('/', 'OrderController@index')->name('orders');
     Route::post('/create', 'OrderController@create')->name('order.create');
     Route::get('/{id}/edit', 'OrderController@edit')->name('order.edit');
-    Route::delete('/{id}/update', 'OrderController@update')->name('order.update');
+    Route::post('/{id}/update', 'OrderController@update')->name('order.update');
 });
 
 Route::group(['prefix' => 'produkOrder', 'middleware' => 'auth'], function () {
     Route::get('/', 'OrderProductsController@index')->name('orderProducts');
-    Route::post('/create', 'OrderProductsController@create')->name('orderProducts.create');
-    Route::get('/{id}/edit', 'OrderProductsController@edit')->name('orderProducts.edit');
-    Route::post('/{id}/update', 'OrderProductsController@update')->name('orderProducts.update');
+    Route::post('/create', 'OrderProductsController@create')->name('orderProduct.create');
+    Route::get('/{id}/edit', 'OrderProductsController@edit')->name('orderProduct.edit');
+    Route::post('/{id}/update', 'OrderProductsController@update')->name('orderProduct.update');
 });
 
 Route::group(['prefix' => 'pembayaran', 'middleware' => 'auth'], function () {
@@ -59,6 +59,7 @@ Route::group(['prefix' => 'pembayaran', 'middleware' => 'auth'], function () {
     Route::post('/create', 'PaymentController@create')->name('payment.create');
     Route::get('/{id}/edit', 'PaymentController@edit')->name('payment.edit');
     Route::post('/{id}/update', 'PaymentController@update')->name('payment.update');
+    Route::delete('/{id}/delete', 'PaymentController@delete')->name('payment.delete');
 });
 
 Route::group(['prefix' => 'status', 'middleware' => 'auth'], function () {
@@ -66,6 +67,7 @@ Route::group(['prefix' => 'status', 'middleware' => 'auth'], function () {
     Route::post('/create', 'StatusController@create')->name('status.create');
     Route::get('/{id}/edit', 'StatusController@edit')->name('status.edit');
     Route::post('/{id}/update', 'StatusController@update')->name('status.update');
+    Route::delete('/{id}/delete', 'StatusController@delete')->name('status.delete');
 });
 
 Route::group(['middleware' => 'auth'], function () {

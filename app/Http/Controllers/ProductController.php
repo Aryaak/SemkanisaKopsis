@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use Exception;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
+    use SoftDeletes;
     /**
      * Display a listing of the resource.
      *

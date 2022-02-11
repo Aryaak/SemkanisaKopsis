@@ -6,9 +6,11 @@ use App\Models\Status;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Exception;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class StatusController extends Controller
 {
+    use SoftDeletes;
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +18,7 @@ class StatusController extends Controller
      */
     public function index()
     {
-        $status = Status::all()->where('deleted',0);
+        $status = Status::all();
         return view('status.index',['status'=>$status]);
     }
 
@@ -69,6 +71,21 @@ class StatusController extends Controller
             return redirect()->route('products');
         }
         Session::flash('message', 'Produk berhasil diubah');
+        Session::flash('alert-class', 'alert-warning');
+        return redirect()->route('statuses');
+    }
+
+    public function delete($id)
+    {
+        try{
+        $status = Status::find($id);
+        $status->delete();
+        }catch(Exception $e){
+            Session::flash('message', $e);
+            Session::flash('alert-class', 'alert-danger');
+            return redirect()->route('products');
+        }
+        Session::flash('message', 'Produk berhasil dihapus');
         Session::flash('alert-class', 'alert-warning');
         return redirect()->route('statuses');
     }

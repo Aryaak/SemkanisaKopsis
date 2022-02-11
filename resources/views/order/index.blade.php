@@ -19,7 +19,7 @@
               </nav>
             </div>
             <div class="col-lg-6 col-5 text-right">
-              <button type="button" class="btn btn-sm p-2 btn-warning" data-toggle="modal" data-target="#addNew" title="Create New order">Tambah Baru</button>
+              {{-- <button type="button" class="btn btn-sm p-2 btn-warning" data-toggle="modal" data-target="#addNew" title="Create New order">Tambah Baru</button> --}}
               <a href="#" class="btn btn-sm btn-neutral">Filters</a>
             </div>
           </div>
@@ -50,9 +50,9 @@
                   <tr>
                     <th scope="col" class="sort" data-sort="id">ID</th>
                     <th scope="col" class="sort" data-sort="name">User</th>
-                    <th scope="col" class="sort" data-sort="name">Status</th>
                     <th scope="col" class="sort" data-sort="name">Pembayaran</th>
                     <th scope="col" class="sort" data-sort="name">Total</th>
+                    <th scope="col" class="sort" data-sort="name">Status</th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
@@ -65,30 +65,39 @@
                       <th scope="row">
                           <div class="media align-items-center">
                               <div class="media-body">
-                                  <span class="name mb-0 text-sm">{{$order->user_id}}</span>
+                                  <span class="name mb-0 text-sm">{{$order->user->name}}</span>
                                 </div>
                             </div>
                         </th>
-                    <td class="status_id">
-                        <div class="media-body">{{$order->status_id}}</div>
-                    </td>
-                    <td class="payment_id">
-                        <div class="media-body">{{$order->id}}</div>
-                    </td>
-                    <td class="total">
-                        <div class="media-body">{{$order->total}}</div>
-                    </td>
+                        <td class="payment_id">
+                            <div class="media-body">{{$order->payment->name}}</div>
+                        </td>
+                        <td class="total">
+                            <div class="media-body">{{$order->total}}</div>
+                        </td>
+                        <th class="status_id">
+                            @if ($order->status_id != 2)
+                                <div class="text-warning media-body">{{$order->status->name}}</div>
+                            @else
+                                <div class="text-success media-body">{{$order->status->name}}</div>
+                            @endif
+                        </th>
                     <td class="text-right">
-                        <a class="btn btn-sm btn-icon-only" style="color: #f48e5f;" data-toggle="modal" data-target="#Edit{{$order->id}}">
-                        <img class="img-fluid" src="{{asset('public/img/icons/edit.svg')}}" alt="Ubah">
-                        </a>
-                        <form action="{{route('order.update',$order->id)}}" method="post">
-                            @csrf
-                            <input style="display: none;" value="1" id="deleted" name="deleted">
-                            <button type="submit" class="btn btn-sm btn-icon-only" onclick="return confirm('Apakah anda yakin ingin menghapus?')" style="color: #f4645f;">
-                            <img class="img-fluid" src="{{asset('public/img/icons/trash.svg')}}" alt="Hapus">
-                        </button>
-                    </form>
+                        <div class="media align-items-center">
+                            @if ($order->status_id != 2)
+                            <form action="{{route('order.update',$order->id)}}" method="post">
+                                @csrf
+                                <input style="display: none;" value="2" id="status_id" name="status_id">
+                                <button type="submit" class="btn btn-sm btn-icon-only" onclick="return confirm('Apakah anda yakin ingin menandai order ini sebagai selesai?')" style="color: #6bf45f;">
+                                    <img class="img-fluid" src="{{asset('img/icons/check-pending.svg')}}" alt="Check">
+                                </button>
+                            </form>
+                            @else
+                                {{-- <button class="btn btn-sm btn-icon-only disabled"> --}}
+                                    <img class="img-fluid" src="{{asset('img/icons/check-success.svg')}}" alt="Check">
+                                </button>
+                            @endif
+                        </div>
                     </td>
                   </tr>
                   <!-- Edit Modal -->
@@ -180,45 +189,15 @@
 @endsection
 
 @push('js')
-    <script src="{{ asset('public/argon/vendor/chart.js/dist/Chart.min.js')}}"></script>
-    <script src="{{ asset('public/argon/vendor/chart.js/dist/Chart.extension.js')}}"></script>
-     <!-- Argon Scripts -->
-  <!-- Core -->
-<script src="{{asset('public/argon/vendor/jquery/dist/jquery.min.js')}}"></script>
-<script src="{{asset('public/argon/vendor/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
-<script src="{{asset('public/argon/vendor/js-cookie/js.cookie.js')}}"></script>
-<script src="{{asset('public/argon/vendor/jquery.scrollbar/jquery.scrollbar.min.js')}}"></script>
-<script src="{{asset('public/argon/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js')}}"></script>
-<!-- Argon JS -->
-<script src="{{asset('public/argon/js/argon.js?v=1.2.0')}}"></script>
-<!-- DataTable -->
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
-
 <script>
     $(document).ready( function () {
-    $('#orders').DataTable();
+    $('#orders').DataTable({
+        "language":{
+            "url":"https://cdn.datatables.net/plug-ins/1.11.4/i18n/id.json",
+        }
+    });
 } );
 </script>
 
-<script type="text/javascript">
-photo.onchange = evt => {
-  const [file] = photo.files
-  if (file) {
-    preview.src = URL.createObjectURL(file);
-    photo.files = URL.createObjectURL(file);
-  }
-}
-</script>
-<script>
-    function isNumberKey(evt)
-			{
-				var charCode = (evt.which) ? evt.which : evt.keyCode;
-				if (charCode != 46 && charCode > 31
-				&& (charCode < 48 || charCode > 57))
-				return false;
-				return true;
-			}
-</script>
 @endpush
 

@@ -6,9 +6,11 @@ use App\Models\OrderProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Exception;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OrderProductsController extends Controller
 {
+    use SoftDeletes;
             /**
      * Display a listing of the resource.
      *
@@ -16,8 +18,8 @@ class OrderProductsController extends Controller
      */
     public function index()
     {
-        $orderproduct = orderproduct::all()->where('deleted',0);
-        return view('orderproduct.index',['orderproduct'=>$orderproduct]);
+        $orderproduct = orderproduct::all();
+        return view('orderProduct.index',['orderproduct'=>$orderproduct]);
     }
 
     /**
@@ -34,9 +36,9 @@ class OrderProductsController extends Controller
             Session::flash('alert-class', 'alert-danger');
             return redirect()->route('products');
         }
-        Session::flash('message', 'orderproduct berhasil dibuat');
+        Session::flash('message', 'order produk berhasil dibuat');
         Session::flash('alert-class', 'alert-success');
-        return redirect()->route('categories');
+        return redirect()->route('orderProducts');
     }
 
     /**
@@ -48,7 +50,7 @@ class OrderProductsController extends Controller
     public function edit(orderproduct $orderproduct,$id)
     {
         $orderproduct = orderproduct::find($id);
-        return view('orderproduct.edit',['orderproduct'=>$orderproduct]);
+        return view('orderProduct.edit',['orderproduct'=>$orderproduct]);
     }
 
     /**
@@ -68,8 +70,22 @@ class OrderProductsController extends Controller
             Session::flash('alert-class', 'alert-danger');
             return redirect()->route('products');
         }
-        Session::flash('message', 'orderproduct berhasil diubah');
+        Session::flash('message', 'order produk berhasil diubah');
         Session::flash('alert-class', 'alert-warning');
-        return redirect()->route('orderProduk');
+        return redirect()->route('orderProducts');
+    }
+    public function delete($id)
+    {
+        try{
+        $orderproduct = orderproduct::find($id);
+        $orderproduct->delete();
+        }catch(Exception $e){
+            Session::flash('message', $e);
+            Session::flash('alert-class', 'alert-danger');
+            return redirect()->route('products');
+        }
+        Session::flash('message', 'order produk berhasil diubah');
+        Session::flash('alert-class', 'alert-warning');
+        return redirect()->route('orderProducts');
     }
 }

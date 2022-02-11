@@ -77,43 +77,52 @@
                 </div>
             </form>
             <!-- Navigation -->
+            <style>
+                .nav-active{
+                    border-right: 6px solid #fb6340;
+                    background-color: #444;
+                }
+                .nav-hover:hover{
+                    background-color: #444;
+                }
+            </style>
             <ul class="navbar-nav">
-                <li class="nav-item" id="home">
+                <li class="nav-item nav-hover {{ Route::currentRouteName() == 'home' ? 'nav-active' : '' }}" id="home">
                     <a class="nav-link" href="{{ route('home') }}">
                         <i class="ni ni-tv-2 text-warning"></i> {{ __('Dashboard') }}
                     </a>
                 </li>
-                <li class="nav-item" id="product">
+                <li class="nav-item nav-hover {{ Route::currentRouteName() == 'products' ? 'nav-active' : '' }}" id="product">
                     <a class="nav-link" href="{{ route('products') }}">
                         <i class="ni ni-planet text-blue"></i> {{ __('Produk') }}
                     </a>
                 </li>
-                <li class="nav-item" id="category">
+                <li class="nav-item nav-hover {{ Route::currentRouteName() == 'categories' ? 'nav-active' : '' }}" id="category">
                     <a class="nav-link" href="{{ route('categories') }}">
                         <i class="ni ni-pin-3 text-orange"></i> {{ __('Kategori') }}
                     </a>
                 </li>
-                <li class="nav-item" id="order">
+                <li class="nav-item nav-hover {{ Route::currentRouteName() == 'orders' ? 'nav-active' : '' }}" id="order">
                     <a class="nav-link" href="{{ route('orders') }}">
                         <i class="ni ni-pin-3 text-orange"></i> {{ __('Order') }}
                     </a>
                 </li>
-                <li class="nav-item" id="orderProduct">
+                <li class="nav-item nav-hover {{ Route::currentRouteName() == 'orderProducts' ? 'nav-active' : '' }}" id="orderProduct">
                     <a class="nav-link" href="{{ route('orderProducts') }}">
                         <i class="ni ni-pin-3 text-orange"></i> {{ __('Produk Order') }}
                     </a>
                 </li>
-                <li class="nav-item" id="payment">
+                <li class="nav-item nav-hover {{ Route::currentRouteName() == 'payments' ? 'nav-active' : '' }}" id="payment">
                     <a class="nav-link" href="{{ route('payments') }}">
                         <i class="ni ni-planet text-blue"></i> {{ __('Pembayaran') }}
                     </a>
                 </li>
-                <li class="nav-item" id="status">
+                <li class="nav-item nav-hover {{ Route::currentRouteName() == 'statuses' ? 'nav-active' : '' }}" id="status">
                     <a class="nav-link" href="{{ route('statuses') }}">
                         <i class="ni ni-planet text-blue"></i> {{ __('Status') }}
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item nav-hover">
                     <a class="nav-link" href="">
                       <i class="ni ni-bullet-list-67 text-default"></i>
                       <span class="nav-link-text">Tables</span>

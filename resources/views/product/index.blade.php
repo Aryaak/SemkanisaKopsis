@@ -282,24 +282,13 @@
 @endsection
 
 @push('js')
-    <script src="{{ asset('argon/vendor/chart.js/dist/Chart.min.js')}}"></script>
-    <script src="{{ asset('argon/vendor/chart.js/dist/Chart.extension.js')}}"></script>
-     <!-- Argon Scripts -->
-  <!-- Core -->
-<script src="{{asset('argon/vendor/jquery/dist/jquery.min.js')}}"></script>
-<script src="{{asset('argon/vendor/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
-<script src="{{asset('argon/vendor/js-cookie/js.cookie.js')}}"></script>
-<script src="{{asset('argon/vendor/jquery.scrollbar/jquery.scrollbar.min.js')}}"></script>
-<script src="{{asset('argon/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js')}}"></script>
-<!-- Argon JS -->
-<script src="{{asset('argon/js/argon.js?v=1.2.0')}}"></script>
-<!-- DataTable -->
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
-
 <script>
     $(document).ready( function () {
-    $('#products').DataTable();
+    $('#products').DataTable({
+        "language":{
+            "url":"https://cdn.datatables.net/plug-ins/1.11.4/i18n/id.json",
+        }
+    });
 } );
 </script>
 

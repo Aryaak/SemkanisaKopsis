@@ -6,9 +6,11 @@ use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Exception;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PaymentController extends Controller
 {
+    use SoftDeletes;
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +18,7 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $payment = Payment::all()->where('deleted',0);
+        $payment = Payment::all();
         return view('payment.index',['payment'=>$payment]);
     }
 
@@ -70,6 +72,21 @@ class PaymentController extends Controller
             return redirect()->route('products');
         }
         Session::flash('message', 'Produk berhasil diubah');
+        Session::flash('alert-class', 'alert-warning');
+        return redirect()->route('payments');
+    }
+
+    public function delete($id)
+    {
+        try{
+        $payment = Payment::find($id);
+        $payment->delete();
+        }catch(Exception $e){
+            Session::flash('message', $e);
+            Session::flash('alert-class', 'alert-danger');
+            return redirect()->route('products');
+        }
+        Session::flash('message', 'Produk berhasil dihapus');
         Session::flash('alert-class', 'alert-warning');
         return redirect()->route('payments');
     }

@@ -70,9 +70,9 @@
                         <a class="btn btn-sm btn-icon-only" style="color: #f48e5f;" data-toggle="modal" data-target="#Edit{{$payment->id}}">
                         <img class="img-fluid" src="{{asset('img/icons/edit.svg')}}" alt="Ubah">
                         </a>
-                        <form action="{{route('payment.update',$payment->id)}}" method="post">
+                        <form action="{{route('payment.delete',$payment->id)}}" method="post">
                             @csrf
-                            <input style="display: none;" value="1" id="deleted" name="deleted">
+                            @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-icon-only" onclick="return confirm('Apakah anda yakin ingin menghapus?')" style="color: #f4645f;">
                             <img class="img-fluid" src="{{asset('img/icons/trash.svg')}}" alt="Hapus">
                         </button>
@@ -147,45 +147,14 @@
 @endsection
 
 @push('js')
-    <script src="{{ asset('argon/vendor/chart.js/dist/Chart.min.js')}}"></script>
-    <script src="{{ asset('argon/vendor/chart.js/dist/Chart.extension.js')}}"></script>
-     <!-- Argon Scripts -->
-  <!-- Core -->
-<script src="{{asset('argon/vendor/jquery/dist/jquery.min.js')}}"></script>
-<script src="{{asset('argon/vendor/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
-<script src="{{asset('argon/vendor/js-cookie/js.cookie.js')}}"></script>
-<script src="{{asset('argon/vendor/jquery.scrollbar/jquery.scrollbar.min.js')}}"></script>
-<script src="{{asset('public/argon/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js')}}"></script>
-<!-- Argon JS -->
-<script src="{{asset('public/argon/js/argon.js?v=1.2.0')}}"></script>
-<!-- DataTable -->
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
-
 <script>
     $(document).ready( function () {
-    $('#payments').DataTable();
+    $('#payments').DataTable({
+        "language":{
+            "url":"https://cdn.datatables.net/plug-ins/1.11.4/i18n/id.json",
+        }
+    });
 } );
-</script>
-
-<script type="text/javascript">
-photo.onchange = evt => {
-  const [file] = photo.files
-  if (file) {
-    preview.src = URL.createObjectURL(file);
-    photo.files = URL.createObjectURL(file);
-  }
-}
-</script>
-<script>
-    function isNumberKey(evt)
-			{
-				var charCode = (evt.which) ? evt.which : evt.keyCode;
-				if (charCode != 46 && charCode > 31
-				&& (charCode < 48 || charCode > 57))
-				return false;
-				return true;
-			}
 </script>
 @endpush
 
