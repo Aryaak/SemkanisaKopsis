@@ -29,6 +29,7 @@ Route::group(['prefix' => 'produk', 'middleware' => 'auth'], function () {
     Route::post('/create', 'ProductController@create')->name('product.create');
     Route::get('/{id}/edit', 'ProductController@edit')->name('product.edit');
     Route::post('/{id}/update', 'ProductController@update')->name('product.update');
+    Route::delete('/{id}/delete', 'ProductController@delete')->name('product.delete');
 });
 
 Route::group(['prefix' => 'kategori', 'middleware' => 'auth'], function () {
@@ -36,13 +37,14 @@ Route::group(['prefix' => 'kategori', 'middleware' => 'auth'], function () {
     Route::post('/create', 'CategoryController@create')->name('category.create');
     Route::get('/{id}/edit', 'CategoryController@edit')->name('category.edit');
     Route::post('/{id}/update', 'CategoryController@update')->name('category.update');
+    Route::delete('/{id}/delete', 'CategoryController@delete')->name('category.delete');
 });
 
 Route::group(['prefix' => 'order', 'middleware' => 'auth'], function () {
     Route::get('/', 'OrderController@index')->name('orders');
     Route::post('/create', 'OrderController@create')->name('order.create');
     Route::get('/{id}/edit', 'OrderController@edit')->name('order.edit');
-    Route::post('/{id}/update', 'OrderController@update')->name('order.update');
+    Route::delete('/{id}/update', 'OrderController@update')->name('order.update');
 });
 
 Route::group(['prefix' => 'produkOrder', 'middleware' => 'auth'], function () {

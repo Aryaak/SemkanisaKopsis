@@ -86,7 +86,12 @@
                         {{$product->category->name}}
                     </td>
                     <td class="photo">
-                      <img class="rounded" style="width: 100px;" src="{{asset('storage/'.$product->photo)}}" alt="test">
+                      <img class="gambar rounded" style="width: 100px;" src="{{asset('storage/'.$product->photo)}}" alt="test">
+                      <style>
+                          .gambar:hover{
+                            transform: scale(3);
+                          }
+                      </style>
                     </td>
                     <td class="stock">
                       {{$product->stock}}
@@ -101,10 +106,9 @@
                         <a class="btn btn-sm btn-icon-only" style="color: #f48e5f;" data-toggle="modal" data-target="#Edit{{$product->id}}">
                         <img class="img-fluid" src="{{asset('img/icons/edit.svg')}}" alt="Ubah">
                         </a>
-                        <form action="{{route('product.update',$product->id)}}" method="post">
+                        <form action="{{route('product.delete',$product->id)}}" method="post">
                             @csrf
-                            <input style="display: none;" value="1" id="deleted" name="deleted">
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                            @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-icon-only" onclick="return confirm('Apakah anda yakin ingin menghapus?')" style="color: #f4645f;">
                             <img class="img-fluid" src="{{asset('img/icons/trash.svg')}}" alt="Hapus">
                         </button>

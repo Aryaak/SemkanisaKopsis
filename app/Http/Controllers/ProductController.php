@@ -82,16 +82,32 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         try{
-        $product = Product::findOrFail($id);
-        $product->update($request->all());
+            $product = Product::findOrFail($id);
+            $product->update($request->all());
         }catch(Exception $e){
-        Session::flash('message', $e);
-        Session::flash('alert-class', 'alert-danger');
-        return redirect()->route('products');
+            Session::flash('message', $e);
+            Session::flash('alert-class', 'alert-danger');
+            return redirect()->route('products');
         }
         Session::flash('message', 'Produk berhasil diubah');
         Session::flash('alert-class', 'alert-warning');
         return redirect()->route('products')->withSuccess(__('Product updated successfully.'));
+    }
+
+    public function delete($id)
+    {
+        try{
+            $product = Product::findOrFail($id);
+            $product->delete();
+            return redirect()->route('products');
+        }catch(Exception $e){
+            Session::flash('message', $e);
+            Session::flash('alert-class', 'alert-danger');
+            return redirect()->route('products');
+        }
+        Session::flash('message', 'Produk berhasil dihapus');
+        Session::flash('alert-class', 'alert-warning');
+        return redirect()->route('products')->withSuccess(__('Product deleted successfully.'));
     }
 
 }

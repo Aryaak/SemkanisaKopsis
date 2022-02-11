@@ -168,15 +168,6 @@
 } );
 </script>
 
-<script type="text/javascript">
-photo.onchange = evt => {
-  const [file] = photo.files
-  if (file) {
-    preview.src = URL.createObjectURL(file);
-    photo.files = URL.createObjectURL(file);
-  }
-}
-</script>
 <script>
     function isNumberKey(evt)
 			{
