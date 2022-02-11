@@ -83,7 +83,7 @@
                       </div>
                     </th>
                     <td class="category">
-                        {{$product->category_id}}
+                        {{$product->category->name}}
                     </td>
                     <td class="photo">
                       <img class="rounded" style="width: 100px;" src="{{asset('storage/'.$product->photo)}}" alt="test">
