@@ -25,19 +25,21 @@
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.11.4/b-2.2.2/b-colvis-2.2.2/b-html5-2.2.2/r-2.2.9/datatables.min.css"/>
     </head>
     <body id="stop-scrolling" class="{{ $class ?? '' }}">
-        <div class="preloader">
-            <div class="loading" id="loading">
-                <img class="prelogo" src="{{asset('img/brand/orange.png')}}" alt="">
-                <br>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-        </div>
+        @if (Route::currentRouteName() != 'login')
+            <div class="preloader">
+                <div class="loading" id="loading">
+                    <img class="prelogo" src="{{asset('img/brand/orange.png')}}" alt="">
+                    <br>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        @endif
         @auth()
             @if (Route::currentRouteName() != 'welcome')
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

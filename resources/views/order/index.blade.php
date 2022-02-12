@@ -96,53 +96,6 @@
                         </div>
                     </td>
                   </tr>
-                  <!-- Edit Modal -->
-  <div class="float modal fade" id="Edit{{$order->id}}" tabindex="-1" aria-labelledby="Edit{{$order->id}}Label" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="Edit{{$order->id}}Label">Add</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <form method="POST" action="{{route('order.update',$order->id)}}">
-                @csrf
-                <div class="form-group row">
-                    <label for="user" class="col-sm-2 col-form-label">User</label>
-                    <select id="user" name="user_id" class="form-control col-sm-9" required>
-                      <option value="">Pilih User</option>
-                      <option value="{{$order->user_id}}">user</option>
-                    </select>
-                  </div>
-                <div class="form-group row">
-                    <label for="status" class="col-sm-2 col-form-label">Status</label>
-                    <select id="status" name="status_id" class="form-control col-sm-9" required>
-                      <option value="">Pilih Status</option>
-                      <option value="{{$order->status_id}}">pending</option>
-                    </select>
-                  </div>
-                <div class="form-group row">
-                    <label for="payment" class="col-sm-2 col-form-label">Pembayaran</label>
-                    <select id="payment" name="payment_id" class="form-control col-sm-9" required>
-                      <option value="">Pilih Pembayaran</option>
-                      <option value="{{$order->payment_id}}">credit card</option>
-                    </select>
-                  </div>
-                  <div class="form-group row">
-                    <label for="total" class="col-sm-2 col-form-label">Total</label>
-                    <input type="text" class="form-control col-sm-9" id="total" name="total" onkeypress="return isNumberKey(event)" value="{{$order->total}}" placeholder="Masukan Total, Contoh: 500000" required>
-                  </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                <button type="submit" class="btn btn-warning">Simpan Perubahan</button>
-            </form>
-        </div>
-      </div>
-    </div>
-  </div>
                   @endforeach
                 </tbody>
               </table>
@@ -152,36 +105,6 @@
       </div>
 @include('layouts.footers.auth')
     </div>
-
-    <!-- Add Modal -->
-  <div class="modal fade" id="addNew" tabindex="-1" aria-labelledby="addNewLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addNewLabel">Add</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <form method="POST" action="{{route('order.create')}}">
-                @csrf
-                <div class="form-group row">
-                  <label for="user_id" class="col-sm-2 col-form-label">User</label>
-                  <input type="text" class="form-control col-sm-9" id="user_id" name="user_id" placeholder="Masukan User order, contoh: User" required autofocus>
-                  <div id="user_id" class="invalid-feedback">
-                    {{$errors->first('user_id')}}
-                  </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                <button type="submit" class="btn btn-warning">Tambah</button>
-            </form>
-        </div>
-      </div>
-    </div>
-  </div>
 @endsection
 
 @push('js')

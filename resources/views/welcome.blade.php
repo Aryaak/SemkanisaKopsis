@@ -7,6 +7,15 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-5 col-md-6">
                         <h1 class="text-white font-weight-bold">{{ __('Welcome to Admin Dashboard Semkanisa Kopsis') }}</h1>
+                        @auth
+                            <a type="button" class="btn btn-outline-white btn-lg mt-4" style="border-radius:30px" href="{{route('home')}}">Go To Dashboard</a>
+                        @endauth
+                        @guest
+                            <a type="button" class="btn btn-outline-white btn-lg mt-4 pr-5 pl-5" style="border-radius:30px" href="{{route('login')}}">
+                                <i class="ni ni-key-25"></i>
+                                <span>Login</span>
+                            </a>
+                        @endguest
                     </div>
                 </div>
             </div>

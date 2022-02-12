@@ -137,28 +137,30 @@
                 <div class="form-group row">
                   <label for="category" class="col-sm-2 col-form-label">Kategori</label>
                   <select id="category" name="category_id" class="form-control col-sm-9" required>
-                    <option value="">Pilih Kategori</option>
-                    <option value="{{$product->category_id}}">test</option>
+                    @foreach ($categories as $item)
+                        @if ($product->category_id == $item->id)
+                            <option value="{{$item->id}}" selected>{{$item->name}}</option>
+                        @else
+                            <option value="{{$item->id}}">{{$item->name}}</option>
+                        @endif
+                    @endforeach
                   </select>
                 </div>
                 <div class="form-group row">
                     <label for="photo" class="col-sm-2 col-form-label">Gambar</label>
-                    <div class="custom-file col-sm-6">
-                      <input accept="image/*" type="file" id="photo" class="custom-file-input form-control" name="photo" value="testtestbrobro" required>
+                    <div class="custom-file col-sm-9">
+                      <input accept="image/*" type="file" id="photo" class="custom-file-input form-control" name="photo" value="{{$product->photo}}">
                       <label class="custom-file-label" for="photo">Pilih Gambar</label>
                     </div>
-                    <img id="preview" class="rounded ml-5" style="height: 100px;" src="{{$product->photo}}" alt="">
-                    <div id="photo" class="invalid-feedback">
-                        {{$errors->first('photo')}}
-                      </div>
+                    {{-- <img id="preview-edit" class="rounded ml-5" style="height: 100px;" src="{{$product->photo}}" alt=""> --}}
                   </div>
                 <div class="form-group row">
                   <label for="stock" class="col-sm-2 col-form-label">Stok</label>
-                  <input type="text" class="form-control col-sm-9" id="stock" name="stock" onkeypress="return isNumberKey(event)" value="{{$product->stock}}"  placeholder="Masukan Jumlah Stok, Contoh: 123" required>
+                  <input type="number" class="form-control col-sm-9" id="stock" name="stock" onkeypress="return isNumberKey(event)" value="{{$product->stock}}"  placeholder="Masukan Jumlah Stok, Contoh: 123" required>
                 </div>
                 <div class="form-group row">
                   <label for="price" class="col-sm-2 col-form-label">Harga</label>
-                  <input type="text" class="form-control col-sm-9" id="price" name="price" onkeypress="return isNumberKey(event)" value="{{$product->price}}" placeholder="Masukan Harga Produk, Contoh: 2500" required>
+                  <input type="number" class="form-control col-sm-9" id="price" name="price" onkeypress="return isNumberKey(event)" value="{{$product->price}}" placeholder="Masukan Harga Produk, Contoh: 2500" required>
                 </div>
                 <div class="form-group">
                   <label for="description">Keterangan</label>
@@ -234,7 +236,7 @@
                 <div class="form-group row">
                   <label for="category_id" class="col-sm-2 col-form-label">Kategori</label>
                   <select id="category_id" name="category_id" class="form-control col-sm-9" required>
-                    <option value="">Pilih Kategori</option>
+                    <option value="none" selected disabled hidden>Pilih Kategori</option>
                     @foreach ($categories as $item)
                     <option value="{{$item->id}}">{{$item->name}}</option>
                     @endforeach
@@ -245,22 +247,22 @@
                 </div>
                 <div class="form-group row">
                     <label for="photo" class="col-sm-2 col-form-label">Gambar</label>
-                    <div class="custom-file col-sm-6">
+                    <div class="custom-file col-sm-9">
                       <input accept="image/*" type="file" id="photo" class="custom-file-input form-control" name="photo" value="testtestbrobro" required>
                       <label class="custom-file-label" for="photo">Pilih Gambar</label>
                     </div>
-                    <img id="preview" class="rounded ml-5" style="height: 100px;" src="https://dummyimage.com/100x100/111/eee&text=preview" alt="">
+                    {{-- <img id="preview-add" class="rounded ml-5" style="height: 100px;" src="https://dummyimage.com/100x100/111/eee&text=preview" alt=""> --}}
                   </div>
                 <div class="form-group row">
                   <label for="stock" class="col-sm-2 col-form-label">Stok</label>
-                  <input type="text" class="form-control col-sm-9" id="stock" name="stock" onkeypress="return isNumberKey(event)" placeholder="Masukan Jumlah Stok, Contoh: 123" required>
+                  <input type="number" class="form-control col-sm-9" id="stock" name="stock" onkeypress="return isNumberKey(event)" placeholder="Masukan Jumlah Stok, Contoh: 123" required>
                   <div id="stock" class="invalid-feedback">
                     {{$errors->first('stock')}}
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="price" class="col-sm-2 col-form-label">Harga</label>
-                  <input type="text" class="form-control col-sm-9" id="price" name="price" onkeypress="return isNumberKey(event)" placeholder="Masukan Harga Produk, Contoh: 2500" required>
+                  <input type="number" class="form-control col-sm-9" id="price" name="price" onkeypress="return isNumberKey(event)" placeholder="Masukan Harga Produk, Contoh: 2500" required>
                   <div id="price" class="invalid-feedback">
                     {{$errors->first('price')}}
                   </div>
@@ -295,15 +297,15 @@
 } );
 </script>
 
-<script type="text/javascript">
+{{-- <script type="text/javascript">
 photo.onchange = evt => {
   const [file] = photo.files
   if (file) {
-    preview.src = URL.createObjectURL(file);
+    preview-add.src = URL.createObjectURL(file);
     photo.files = URL.createObjectURL(file);
   }
 }
-</script>
+</script> --}}
 <script>
     function isNumberKey(evt)
 			{
