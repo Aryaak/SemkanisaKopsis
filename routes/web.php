@@ -19,6 +19,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/about', function(){
+    return view('about');
+})->name('about');
 
 Route::group(['prefix' => 'produk', 'middleware' => 'auth'], function () {
     Route::get('/', 'ProductController@index')->name('products');

@@ -10,14 +10,14 @@
               <h6 class="h2 text-white d-inline-block mb-0">Status</h6>
               <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                  <li class="breadcrumb-item" style="color: #f48e5f;"><a href="#"><i class="fas fa-home"></i></a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="fa fa-home text-warning"></i></a></li>
                   <li class="breadcrumb-item active" aria-current="page">Status</li>
                 </ol>
               </nav>
             </div>
             <div class="col-lg-6 col-5 text-right">
               <button type="button" class="btn btn-sm p-2 btn-warning" data-toggle="modal" data-target="#addNew" title="Create New status">Tambah Baru</button>
-              <a href="#" class="btn btn-sm btn-neutral">Filters</a>
+              {{-- <a href="#" class="btn btn-sm btn-neutral">Filters</a> --}}
             </div>
           </div>
         </div>
