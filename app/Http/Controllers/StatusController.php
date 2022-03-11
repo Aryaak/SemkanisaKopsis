@@ -16,8 +16,8 @@ class StatusController extends Controller
      */
     public function index()
     {
-        $status = Status::all()->where('deleted',0);
-        return view('status.index',['status'=>$status]);
+        $status = Status::all();
+        return view('status.index', ['status' => $status]);
     }
 
     /**
@@ -25,11 +25,11 @@ class StatusController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Status $status,Request $request)
+    public function create(Status $status, Request $request)
     {
-        try{
-        $status->create($request->all());
-        }catch(Exception $e){
+        try {
+            $status->create($request->all());
+        } catch (Exception $e) {
             Session::flash('message', $e);
             Session::flash('alert-class', 'alert-danger');
             return redirect()->route('products');
@@ -45,10 +45,10 @@ class StatusController extends Controller
      * @param  \App\Models\status  $status
      * @return \Illuminate\Http\Response
      */
-    public function edit(Status $status,$id)
+    public function edit(Status $status, $id)
     {
         $status = Status::find($id);
-        return view('status.edit',['status'=>$status]);
+        return view('status.edit', ['status' => $status]);
     }
 
     /**
@@ -58,12 +58,12 @@ class StatusController extends Controller
      * @param  \App\Models\status  $status
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Status $status,$id)
+    public function update(Request $request, Status $status, $id)
     {
-        try{
-        $status = Status::find($id);
-        $status->update($request->all());
-        }catch(Exception $e){
+        try {
+            $status = Status::find($id);
+            $status->update($request->all());
+        } catch (Exception $e) {
             Session::flash('message', $e);
             Session::flash('alert-class', 'alert-danger');
             return redirect()->route('products');

@@ -9,15 +9,15 @@ use Exception;
 
 class OrderProductController extends Controller
 {
-            /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $orderproduct = orderproduct::all()->where('deleted',0);
-        return view('orderproduct.index',['orderproduct'=>$orderproduct]);
+        $orderproduct = orderproduct::all();
+        return view('orderproduct.index', ['orderproduct' => $orderproduct]);
     }
 
     /**
@@ -25,11 +25,11 @@ class OrderProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(orderproduct $orderproduct,Request $request)
+    public function create(orderproduct $orderproduct, Request $request)
     {
-        try{
-        $orderproduct->create($request->all());
-        }catch(Exception $e){
+        try {
+            $orderproduct->create($request->all());
+        } catch (Exception $e) {
             Session::flash('message', $e);
             Session::flash('alert-class', 'alert-danger');
             return redirect()->route('products');
@@ -45,10 +45,10 @@ class OrderProductController extends Controller
      * @param  \App\Models\orderproduct  $orderproduct
      * @return \Illuminate\Http\Response
      */
-    public function edit(orderproduct $orderproduct,$id)
+    public function edit(orderproduct $orderproduct, $id)
     {
         $orderproduct = orderproduct::find($id);
-        return view('orderproduct.edit',['orderproduct'=>$orderproduct]);
+        return view('orderproduct.edit', ['orderproduct' => $orderproduct]);
     }
 
     /**
@@ -58,12 +58,12 @@ class OrderProductController extends Controller
      * @param  \App\Models\orderproduct  $orderproduct
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, orderproduct $orderproduct,$id)
+    public function update(Request $request, orderproduct $orderproduct, $id)
     {
-        try{
-        $orderproduct = orderproduct::find($id);
-        $orderproduct->update($request->all());
-        }catch(Exception $e){
+        try {
+            $orderproduct = orderproduct::find($id);
+            $orderproduct->update($request->all());
+        } catch (Exception $e) {
             Session::flash('message', $e);
             Session::flash('alert-class', 'alert-danger');
             return redirect()->route('products');

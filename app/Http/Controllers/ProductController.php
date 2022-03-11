@@ -17,15 +17,15 @@ class ProductController extends Controller
      */
     public function index()
     {
-        try{
-        $product = DB::table('products')->join('categories','products.category_id','=','categories.id')->select('products.*','categories.name')->where('products.deleted',0)->get();
-        $product=Product::all()->where('deleted',0);
-        }catch(Exception $e){
+        try {
+            $product = DB::table('products')->join('categories', 'products.category_id', '=', 'categories.id')->select('products.*', 'categories.name')->get();
+            $product = Product::all();
+        } catch (Exception $e) {
             Session::flash('message', $e);
             Session::flash('alert-class', 'alert-danger');
             return redirect()->back();
         }
-        return view('product.index',['product'=>$product]);
+        return view('product.index', ['product' => $product]);
     }
 
     /**
@@ -35,11 +35,11 @@ class ProductController extends Controller
      */
     public function create(Product $product, Request $request)
     {
-        try{
+        try {
             $input = $request->except('photo');
             $input['photo'] = request()->file('photo');
             $product = Product::create($input);
-        }catch(Exception $e){
+        } catch (Exception $e) {
             Session::flash('message', $e);
             Session::flash('alert-class', 'alert-danger');
             return redirect()->route('products');
@@ -54,16 +54,16 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product,$id)
+    public function edit(Product $product, $id)
     {
-        try{
-        $product = Product::findOrFail($id);
-        }catch(Exception $e){
-        Session::flash('message', $e);
-        Session::flash('alert-class', 'alert-danger');
-        return redirect()->route('products');
-    }
-        return view('product.edit',['product'=>$product]);
+        try {
+            $product = Product::findOrFail($id);
+        } catch (Exception $e) {
+            Session::flash('message', $e);
+            Session::flash('alert-class', 'alert-danger');
+            return redirect()->route('products');
+        }
+        return view('product.edit', ['product' => $product]);
     }
 
     /**
@@ -75,17 +75,16 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try{
-        $product = Product::findOrFail($id);
-        $product->update($request->all());
-        }catch(Exception $e){
-        Session::flash('message', $e);
-        Session::flash('alert-class', 'alert-danger');
-        return redirect()->route('products');
+        try {
+            $product = Product::findOrFail($id);
+            $product->update($request->all());
+        } catch (Exception $e) {
+            Session::flash('message', $e);
+            Session::flash('alert-class', 'alert-danger');
+            return redirect()->route('products');
         }
         Session::flash('message', 'Produk berhasil diubah');
         Session::flash('alert-class', 'alert-warning');
         return redirect()->route('products')->withSuccess(__('Product updated successfully.'));
     }
-
 }

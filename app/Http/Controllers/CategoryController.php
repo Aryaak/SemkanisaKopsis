@@ -16,8 +16,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $category = Category::all()->where('deleted',0);
-        return view('category.index',['category'=>$category]);
+        $category = Category::all();
+        return view('category.index', ['category' => $category]);
     }
 
     /**
@@ -25,11 +25,11 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Category $category,Request $request)
+    public function create(Category $category, Request $request)
     {
-        try{
-        $category->create($request->all());
-        }catch(Exception $e){
+        try {
+            $category->create($request->all());
+        } catch (Exception $e) {
             Session::flash('message', $e);
             Session::flash('alert-class', 'alert-danger');
             return redirect()->route('products');
@@ -45,10 +45,10 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category,$id)
+    public function edit(Category $category, $id)
     {
         $category = Category::find($id);
-        return view('category.edit',['category'=>$category]);
+        return view('category.edit', ['category' => $category]);
     }
 
     /**
@@ -58,12 +58,12 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category,$id)
+    public function update(Request $request, Category $category, $id)
     {
-        try{
-        $category = Category::find($id);
-        $category->update($request->all());
-        }catch(Exception $e){
+        try {
+            $category = Category::find($id);
+            $category->update($request->all());
+        } catch (Exception $e) {
             Session::flash('message', $e);
             Session::flash('alert-class', 'alert-danger');
             return redirect()->route('products');

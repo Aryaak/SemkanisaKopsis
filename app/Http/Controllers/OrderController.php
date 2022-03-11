@@ -9,15 +9,15 @@ use Exception;
 
 class OrderController extends Controller
 {
-        /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $order = order::all()->where('deleted',0);
-        return view('order.index',['order'=>$order]);
+        $order = order::all();
+        return view('order.index', ['order' => $order]);
     }
 
     /**
@@ -25,11 +25,11 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(order $order,Request $request)
+    public function create(order $order, Request $request)
     {
-        try{
-        $order->create($request->all());
-        }catch(Exception $e){
+        try {
+            $order->create($request->all());
+        } catch (Exception $e) {
             Session::flash('message', $e);
             Session::flash('alert-class', 'alert-danger');
             return redirect()->route('products');
@@ -45,10 +45,10 @@ class OrderController extends Controller
      * @param  \App\Models\order  $order
      * @return \Illuminate\Http\Response
      */
-    public function edit(order $order,$id)
+    public function edit(order $order, $id)
     {
         $order = order::find($id);
-        return view('order.edit',['order'=>$order]);
+        return view('order.edit', ['order' => $order]);
     }
 
     /**
@@ -58,12 +58,12 @@ class OrderController extends Controller
      * @param  \App\Models\order  $order
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, order $order,$id)
+    public function update(Request $request, order $order, $id)
     {
-        try{
-        $order = order::find($id);
-        $order->update($request->all());
-        }catch(Exception $e){
+        try {
+            $order = order::find($id);
+            $order->update($request->all());
+        } catch (Exception $e) {
             Session::flash('message', $e);
             Session::flash('alert-class', 'alert-danger');
             return redirect()->route('products');
@@ -73,4 +73,3 @@ class OrderController extends Controller
         return redirect()->route('categories');
     }
 }
-

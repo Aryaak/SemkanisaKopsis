@@ -16,8 +16,8 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $payment = Payment::all()->where('deleted',0);
-        return view('payment.index',['payment'=>$payment]);
+        $payment = Payment::all();
+        return view('payment.index', ['payment' => $payment]);
     }
 
     /**
@@ -25,11 +25,11 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Payment $payment,Request $request)
+    public function create(Payment $payment, Request $request)
     {
-        try{
-        $payment->create($request->all());
-        }catch(Exception $e){
+        try {
+            $payment->create($request->all());
+        } catch (Exception $e) {
             Session::flash('message', $e);
             Session::flash('alert-class', 'alert-danger');
             return redirect()->route('products');
@@ -46,10 +46,10 @@ class PaymentController extends Controller
      * @param  \App\Models\payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function edit(Payment $payment,$id)
+    public function edit(Payment $payment, $id)
     {
         $payment = Payment::find($id);
-        return view('payment.edit',['payment'=>$payment]);
+        return view('payment.edit', ['payment' => $payment]);
     }
 
     /**
@@ -59,12 +59,12 @@ class PaymentController extends Controller
      * @param  \App\Models\payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Payment $payment,$id)
+    public function update(Request $request, Payment $payment, $id)
     {
-        try{
-        $payment = Payment::find($id);
-        $payment->update($request->all());
-        }catch(Exception $e){
+        try {
+            $payment = Payment::find($id);
+            $payment->update($request->all());
+        } catch (Exception $e) {
             Session::flash('message', $e);
             Session::flash('alert-class', 'alert-danger');
             return redirect()->route('products');
