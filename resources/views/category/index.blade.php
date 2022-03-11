@@ -1,7 +1,4 @@
 @extends('layouts.app')
-<head>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css">
-</head>
 @section('content')
 @include('layouts.headers.blank')
     <!-- Header -->
@@ -13,14 +10,14 @@
               <h6 class="h2 text-white d-inline-block mb-0">Kategori</h6>
               <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                  <li class="breadcrumb-item" style="color: #f48e5f;"><a href="#"><i class="fas fa-home"></i></a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="fa fa-home text-warning"></i></a></li>
                   <li class="breadcrumb-item active" aria-current="page">Kategori</li>
                 </ol>
               </nav>
             </div>
             <div class="col-lg-6 col-5 text-right">
               <button type="button" class="btn btn-sm p-2 btn-warning" data-toggle="modal" data-target="#addNew" title="Create New category">Tambah Baru</button>
-              <a href="#" class="btn btn-sm btn-neutral">Filters</a>
+              {{-- <a href="#" class="btn btn-sm btn-neutral">Filters</a> --}}
             </div>
           </div>
         </div>
@@ -41,7 +38,6 @@
           <div class="card pl-3 pr-3 pb-3">
             <!-- Card header -->
             <div class="card-header border-0">
-              <h3 class="mb-0">Kategori</h3>
             </div>
             <!-- Light table -->
             <div class="table-responsive">
@@ -67,16 +63,22 @@
                       </div>
                     </th>
                     <td class="text-right">
-                        <a class="btn btn-sm btn-icon-only" style="color: #f48e5f;" data-toggle="modal" data-target="#Edit{{$category->id}}">
-                        <img class="img-fluid" src="{{asset('img/icons/edit.svg')}}" alt="Ubah">
-                        </a>
-                        <form action="{{route('category.update',$category->id)}}" method="post">
-                            @csrf
-                            <input style="display: none;" value="1" id="deleted" name="deleted">
-                            <button type="submit" class="btn btn-sm btn-icon-only" onclick="return confirm('Apakah anda yakin ingin menghapus?')" style="color: #f4645f;">
-                            <img class="img-fluid" src="{{asset('img/icons/trash.svg')}}" alt="Hapus">
-                        </button>
-                    </form>
+                        <div class="row">
+                            <a class="btn btn-sm btn-icon-only" style="color: #f48e5f;" data-toggle="modal" data-target="#Edit{{$category->id}}">
+                            <img class="img-fluid" src="{{asset('img/icons/edit.svg')}}" alt="Ubah">
+                            UBAH
+                            </a>
+                        </div>
+                        <div class="row">
+                            <form action="{{route('category.delete',$category->id)}}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-icon-only" onclick="return confirm('Apakah anda yakin ingin menghapus?')" style="color: #f4645f;">
+                                <img class="img-fluid" src="{{asset('img/icons/trash.svg')}}" alt="Hapus">
+                                HAPUS
+                            </button>
+                        </form>
+                        </div>
                     </td>
                   </tr>
                   <!-- Edit Modal -->
@@ -147,45 +149,14 @@
 @endsection
 
 @push('js')
-    <script src="{{ asset('argon/vendor/chart.js/dist/Chart.min.js')}}"></script>
-    <script src="{{ asset('argon/vendor/chart.js/dist/Chart.extension.js')}}"></script>
-     <!-- Argon Scripts -->
-  <!-- Core -->
-<script src="{{asset('argon/vendor/jquery/dist/jquery.min.js')}}"></script>
-<script src="{{asset('argon/vendor/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
-<script src="{{asset('argon/vendor/js-cookie/js.cookie.js')}}"></script>
-<script src="{{asset('argon/vendor/jquery.scrollbar/jquery.scrollbar.min.js')}}"></script>
-<script src="{{asset('argon/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js')}}"></script>
-<!-- Argon JS -->
-<script src="{{asset('argon/js/argon.js?v=1.2.0')}}"></script>
-<!-- DataTable -->
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
-
 <script>
     $(document).ready( function () {
-    $('#categorys').DataTable();
+    $('#categorys').DataTable({
+        "language":{
+            "url":"https://cdn.datatables.net/plug-ins/1.11.4/i18n/id.json",
+        }
+    });
 } );
-</script>
-
-<script type="text/javascript">
-photo.onchange = evt => {
-  const [file] = photo.files
-  if (file) {
-    preview.src = URL.createObjectURL(file);
-    photo.files = URL.createObjectURL(file);
-  }
-}
-</script>
-<script>
-    function isNumberKey(evt)
-			{
-				var charCode = (evt.which) ? evt.which : evt.keyCode;
-				if (charCode != 46 && charCode > 31
-				&& (charCode < 48 || charCode > 57))
-				return false;
-				return true;
-			}
 </script>
 @endpush
 

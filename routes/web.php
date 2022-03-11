@@ -14,21 +14,21 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
-
-Route::get('/admin', function () {
-    return view('index');
-});
+})->name('welcome');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/about', function(){
+    return view('about');
+})->name('about');
 
 Route::group(['prefix' => 'produk', 'middleware' => 'auth'], function () {
     Route::get('/', 'ProductController@index')->name('products');
     Route::post('/create', 'ProductController@create')->name('product.create');
     Route::get('/{id}/edit', 'ProductController@edit')->name('product.edit');
     Route::post('/{id}/update', 'ProductController@update')->name('product.update');
+    Route::delete('/{id}/delete', 'ProductController@delete')->name('product.delete');
 });
 
 Route::group(['prefix' => 'kategori', 'middleware' => 'auth'], function () {
@@ -36,6 +36,7 @@ Route::group(['prefix' => 'kategori', 'middleware' => 'auth'], function () {
     Route::post('/create', 'CategoryController@create')->name('category.create');
     Route::get('/{id}/edit', 'CategoryController@edit')->name('category.edit');
     Route::post('/{id}/update', 'CategoryController@update')->name('category.update');
+    Route::delete('/{id}/delete', 'CategoryController@delete')->name('category.delete');
 });
 
 Route::group(['prefix' => 'order', 'middleware' => 'auth'], function () {
@@ -47,9 +48,9 @@ Route::group(['prefix' => 'order', 'middleware' => 'auth'], function () {
 
 Route::group(['prefix' => 'produkOrder', 'middleware' => 'auth'], function () {
     Route::get('/', 'OrderProductsController@index')->name('orderProducts');
-    Route::post('/create', 'OrderProductsController@create')->name('orderProducts.create');
-    Route::get('/{id}/edit', 'OrderProductsController@edit')->name('orderProducts.edit');
-    Route::post('/{id}/update', 'OrderProductsController@update')->name('orderProducts.update');
+    Route::post('/create', 'OrderProductsController@create')->name('orderProduct.create');
+    Route::get('/{id}/edit', 'OrderProductsController@edit')->name('orderProduct.edit');
+    Route::post('/{id}/update', 'OrderProductsController@update')->name('orderProduct.update');
 });
 
 Route::group(['prefix' => 'pembayaran', 'middleware' => 'auth'], function () {
@@ -57,6 +58,7 @@ Route::group(['prefix' => 'pembayaran', 'middleware' => 'auth'], function () {
     Route::post('/create', 'PaymentController@create')->name('payment.create');
     Route::get('/{id}/edit', 'PaymentController@edit')->name('payment.edit');
     Route::post('/{id}/update', 'PaymentController@update')->name('payment.update');
+    Route::delete('/{id}/delete', 'PaymentController@delete')->name('payment.delete');
 });
 
 Route::group(['prefix' => 'status', 'middleware' => 'auth'], function () {
@@ -64,6 +66,7 @@ Route::group(['prefix' => 'status', 'middleware' => 'auth'], function () {
     Route::post('/create', 'StatusController@create')->name('status.create');
     Route::get('/{id}/edit', 'StatusController@edit')->name('status.edit');
     Route::post('/{id}/update', 'StatusController@update')->name('status.update');
+    Route::delete('/{id}/delete', 'StatusController@delete')->name('status.delete');
 });
 
 Route::group(['middleware' => 'auth'], function () {

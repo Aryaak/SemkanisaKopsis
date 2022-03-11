@@ -15,4 +15,13 @@ class Order extends Model
         'payment_id',
         'total',
     ];
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+    public function status() {
+        return $this->belongsTo(Status::class);
+    }
+    public function payment() {
+        return $this->belongsTo(Payment::class);
+    }
 }

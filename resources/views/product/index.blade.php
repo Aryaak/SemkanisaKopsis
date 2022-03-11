@@ -1,7 +1,4 @@
 @extends('layouts.app')
-<head>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css">
-</head>
 @section('content')
 @include('layouts.headers.blank')
     <!-- Header -->
@@ -13,14 +10,14 @@
               <h6 class="h2 text-white d-inline-block mb-0">Produk</h6>
               <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                  <li class="breadcrumb-item" style="color: #f48e5f;"><a href="#"><i class="fas fa-home"></i></a></li>
+                  <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="fa fa-home text-warning"></i></a></li>
                   <li class="breadcrumb-item active" aria-current="page">Produk</li>
                 </ol>
               </nav>
             </div>
             <div class="col-lg-6 col-5 text-right">
               <button type="button" class="btn btn-sm p-2 btn-warning" data-toggle="modal" data-target="#addNew" title="Create New Product">Tambah Baru</button>
-              <a href="#" class="btn btn-sm btn-neutral">Filters</a>
+              {{-- <a href="#" class="btn btn-sm btn-neutral">Filters</a> --}}
             </div>
           </div>
         </div>
@@ -51,7 +48,6 @@
           <div class="card pl-3 pr-3 pb-3">
             <!-- Card header -->
             <div class="card-header border-0">
-              <h3 class="mb-0">Produk</h3>
             </div>
             <!-- Light table -->
             <div class="table-responsive">
@@ -74,7 +70,7 @@
                     <td class="id">
                       {{$product->id}}
                     </td>
-                    <td class="photo">
+
                     <th scope="row">
                       <div class="media align-items-center">
                         <div class="media-body">
@@ -83,10 +79,15 @@
                       </div>
                     </th>
                     <td class="category">
-                      {{$product->category}}
+                        {{$product->category->name}}
                     </td>
                     <td class="photo">
-                      <img class="rounded" style="width: 100px;" src="{{$product->photo}}" alt="test">
+                      <img class="gambar rounded" style="width: 100px;" src="{{asset('storage/'.$product->photo)}}" alt="test">
+                      <style>
+                          .gambar:hover{
+                            transform: scale(3);
+                          }
+                      </style>
                     </td>
                     <td class="stock">
                       {{$product->stock}}
@@ -98,17 +99,22 @@
                       {{$product->description}}
                     </td>
                     <td class="text-right">
-                        <a class="btn btn-sm btn-icon-only" style="color: #f48e5f;" data-toggle="modal" data-target="#Edit{{$product->id}}">
-                        <img class="img-fluid" src="{{asset('img/icons/edit.svg')}}" alt="Ubah">
-                        </a>
-                        <form action="{{route('product.update',$product->id)}}" method="post">
-                            @csrf
-                            <input style="display: none;" value="1" id="deleted" name="deleted">
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                            <button type="submit" class="btn btn-sm btn-icon-only" onclick="return confirm('Apakah anda yakin ingin menghapus?')" style="color: #f4645f;">
-                            <img class="img-fluid" src="{{asset('img/icons/trash.svg')}}" alt="Hapus">
-                        </button>
-                    </form>
+                        <div class="row">
+                            <a class="btn btn-sm btn-icon-only" style="color: #f48e5f;" data-toggle="modal" data-target="#Edit{{$product->id}}">
+                            <img class="img-fluid" src="{{asset('img/icons/edit.svg')}}" alt="Ubah">
+                            UBAH
+                            </a>
+                        </div>
+                        <div class="row">
+                            <form action="{{route('product.delete',$product->id)}}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-icon-only" onclick="return confirm('Apakah anda yakin ingin menghapus?')" style="color: #f4645f;">
+                                <img class="img-fluid" src="{{asset('img/icons/trash.svg')}}" alt="Hapus">
+                                HAPUS
+                            </button>
+                            </form>
+                        </div>
                     </td>
                   </tr>
 <!-- Edit Modal -->
@@ -116,7 +122,7 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="Edit{{$product->id}}Label">Add</h5>
+          <h5 class="modal-title" id="Edit{{$product->id}}Label">Edit</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -131,28 +137,30 @@
                 <div class="form-group row">
                   <label for="category" class="col-sm-2 col-form-label">Kategori</label>
                   <select id="category" name="category_id" class="form-control col-sm-9" required>
-                    <option value="">Pilih Kategori</option>
-                    <option value="{{$product->category_id}}">test</option>
+                    @foreach ($categories as $item)
+                        @if ($product->category_id == $item->id)
+                            <option value="{{$item->id}}" selected>{{$item->name}}</option>
+                        @else
+                            <option value="{{$item->id}}">{{$item->name}}</option>
+                        @endif
+                    @endforeach
                   </select>
                 </div>
                 <div class="form-group row">
                     <label for="photo" class="col-sm-2 col-form-label">Gambar</label>
-                    <div class="custom-file col-sm-6">
-                      <input accept="image/*" type="file" id="photo" class="custom-file-input form-control" name="photo" value="testtestbrobro" required>
+                    <div class="custom-file col-sm-9">
+                      <input accept="image/*" type="file" id="photo" class="custom-file-input form-control" name="photo" value="{{$product->photo}}">
                       <label class="custom-file-label" for="photo">Pilih Gambar</label>
                     </div>
-                    <img id="preview" class="rounded ml-5" style="height: 100px;" src="{{$product->photo}}" alt="">
-                    <div id="photo" class="invalid-feedback">
-                        {{$errors->first('photo')}}
-                      </div>
+                    {{-- <img id="preview-edit" class="rounded ml-5" style="height: 100px;" src="{{$product->photo}}" alt=""> --}}
                   </div>
                 <div class="form-group row">
                   <label for="stock" class="col-sm-2 col-form-label">Stok</label>
-                  <input type="text" class="form-control col-sm-9" id="stock" name="stock" onkeypress="return isNumberKey(event)" value="{{$product->stock}}"  placeholder="Masukan Jumlah Stok, Contoh: 123" required>
+                  <input type="number" class="form-control col-sm-9" id="stock" name="stock" onkeypress="return isNumberKey(event)" value="{{$product->stock}}"  placeholder="Masukan Jumlah Stok, Contoh: 123" required>
                 </div>
                 <div class="form-group row">
                   <label for="price" class="col-sm-2 col-form-label">Harga</label>
-                  <input type="text" class="form-control col-sm-9" id="price" name="price" onkeypress="return isNumberKey(event)" value="{{$product->price}}" placeholder="Masukan Harga Produk, Contoh: 2500" required>
+                  <input type="number" class="form-control col-sm-9" id="price" name="price" onkeypress="return isNumberKey(event)" value="{{$product->price}}" placeholder="Masukan Harga Produk, Contoh: 2500" required>
                 </div>
                 <div class="form-group">
                   <label for="description">Keterangan</label>
@@ -217,6 +225,7 @@
         <div class="modal-body">
             <form method="POST" enctype="multipart/form-data" action="{{route('product.create')}}">
                 @csrf
+                <link rel="stylesheet" href="{{asset('css/preloader.css')}}">
                 <div class="form-group row">
                   <label for="name" class="col-sm-2 col-form-label">Nama</label>
                   <input type="text" class="form-control col-sm-9" id="name" name="name" placeholder="Nama Produk" required autofocus>
@@ -227,8 +236,10 @@
                 <div class="form-group row">
                   <label for="category_id" class="col-sm-2 col-form-label">Kategori</label>
                   <select id="category_id" name="category_id" class="form-control col-sm-9" required>
-                    <option value="">Pilih Kategori</option>
-                    <option value="0">test</option>
+                    <option value="none" selected disabled hidden>Pilih Kategori</option>
+                    @foreach ($categories as $item)
+                    <option value="{{$item->id}}">{{$item->name}}</option>
+                    @endforeach
                   </select>
                   <div id="category" class="invalid-feedback">
                     {{$errors->first('category_id')}}
@@ -236,22 +247,22 @@
                 </div>
                 <div class="form-group row">
                     <label for="photo" class="col-sm-2 col-form-label">Gambar</label>
-                    <div class="custom-file col-sm-6">
+                    <div class="custom-file col-sm-9">
                       <input accept="image/*" type="file" id="photo" class="custom-file-input form-control" name="photo" value="testtestbrobro" required>
                       <label class="custom-file-label" for="photo">Pilih Gambar</label>
                     </div>
-                    <img id="preview" class="rounded ml-5" style="height: 100px;" src="https://dummyimage.com/100x100/111/eee&text=preview" alt="">
+                    {{-- <img id="preview-add" class="rounded ml-5" style="height: 100px;" src="https://dummyimage.com/100x100/111/eee&text=preview" alt=""> --}}
                   </div>
                 <div class="form-group row">
                   <label for="stock" class="col-sm-2 col-form-label">Stok</label>
-                  <input type="text" class="form-control col-sm-9" id="stock" name="stock" onkeypress="return isNumberKey(event)" placeholder="Masukan Jumlah Stok, Contoh: 123" required>
+                  <input type="number" class="form-control col-sm-9" id="stock" name="stock" onkeypress="return isNumberKey(event)" placeholder="Masukan Jumlah Stok, Contoh: 123" required>
                   <div id="stock" class="invalid-feedback">
                     {{$errors->first('stock')}}
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="price" class="col-sm-2 col-form-label">Harga</label>
-                  <input type="text" class="form-control col-sm-9" id="price" name="price" onkeypress="return isNumberKey(event)" placeholder="Masukan Harga Produk, Contoh: 2500" required>
+                  <input type="number" class="form-control col-sm-9" id="price" name="price" onkeypress="return isNumberKey(event)" placeholder="Masukan Harga Produk, Contoh: 2500" required>
                   <div id="price" class="invalid-feedback">
                     {{$errors->first('price')}}
                   </div>
@@ -276,35 +287,14 @@
 @endsection
 
 @push('js')
-    <script src="{{ asset('argon/vendor/chart.js/dist/Chart.min.js')}}"></script>
-    <script src="{{ asset('argon/vendor/chart.js/dist/Chart.extension.js')}}"></script>
-     <!-- Argon Scripts -->
-  <!-- Core -->
-<script src="{{asset('argon/vendor/jquery/dist/jquery.min.js')}}"></script>
-<script src="{{asset('argon/vendor/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
-<script src="{{asset('argon/vendor/js-cookie/js.cookie.js')}}"></script>
-<script src="{{asset('argon/vendor/jquery.scrollbar/jquery.scrollbar.min.js')}}"></script>
-<script src="{{asset('argon/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js')}}"></script>
-<!-- Argon JS -->
-<script src="{{asset('argon/js/argon.js?v=1.2.0')}}"></script>
-<!-- DataTable -->
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
-
 <script>
     $(document).ready( function () {
-    $('#products').DataTable();
+    $('#products').DataTable({
+        "language":{
+            "url":"https://cdn.datatables.net/plug-ins/1.11.4/i18n/id.json",
+        }
+    });
 } );
-</script>
-
-<script type="text/javascript">
-photo.onchange = evt => {
-  const [file] = photo.files
-  if (file) {
-    preview.src = URL.createObjectURL(file);
-    photo.files = URL.createObjectURL(file);
-  }
-}
 </script>
 <script>
     function isNumberKey(evt)

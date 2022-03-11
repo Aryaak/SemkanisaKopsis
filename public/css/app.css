@@ -1,4 +1,17 @@
-.nav-active  {
-    border-left: 6px solid #fb6340;
-    background-color: #555;
+a {
+    text-decoration: none;
 }
+a:link .link-warning {
+    color: #fb6340;
+    border-bottom: 1px solid #ff0000;
+}
+a:visited .link-warning{
+    color: #fb6340;
+    border-bottom: 1px solid #b3b3b3;
+}
+a:hover .link-warning{
+    color: #fb6340;
+    border-bottom: 1px solid #000099;
+}
+
+

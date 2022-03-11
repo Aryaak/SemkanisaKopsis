@@ -89,42 +89,43 @@
             <ul class="navbar-nav">
                 <li class="nav-item nav-hover {{ Route::currentRouteName() == 'home' ? 'nav-active' : '' }}" id="home">
                     <a class="nav-link" href="{{ route('home') }}">
-                        <i class="ni ni-tv-2 {{ Route::currentRouteName() == 'home' ? 'text-warning' : '' }}"></i> <div class="fa {{ Route::currentRouteName() == 'home' ? 'text-warning' : '' }}">{{ __('Dashboard') }}</div>
+                        <i class="ni ni-tv-2 text-warning"></i> {{ __('Dashboard') }}
                     </a>
                 </li>
                 <li class="nav-item nav-hover {{ Route::currentRouteName() == 'products' ? 'nav-active' : '' }}" id="product">
                     <a class="nav-link" href="{{ route('products') }}">
-                        <i class="fa fa-inbox {{ Route::currentRouteName() == 'products' ? 'text-warning' : '' }}"></i> <div class="fa {{ Route::currentRouteName() == 'products' ? 'text-warning' : '' }}">{{ __('Produk') }}</div>
+                        <i class="ni ni-planet text-blue"></i> {{ __('Produk') }}
                     </a>
                 </li>
                 <li class="nav-item nav-hover {{ Route::currentRouteName() == 'categories' ? 'nav-active' : '' }}" id="category">
                     <a class="nav-link" href="{{ route('categories') }}">
-                        <i class="fa fa-list {{ Route::currentRouteName() == 'categories' ? 'text-warning' : '' }}"></i> <div class="fa {{ Route::currentRouteName() == 'categories' ? 'text-warning' : '' }}">{{ __('Kategori') }}</div>
+                        <i class="ni ni-pin-3 text-orange"></i> {{ __('Kategori') }}
                     </a>
                 </li>
                 <li class="nav-item nav-hover {{ Route::currentRouteName() == 'orders' ? 'nav-active' : '' }}" id="order">
                     <a class="nav-link" href="{{ route('orders') }}">
-                        <i class="fa fa-shopping-bag {{ Route::currentRouteName() == 'orders' ? 'text-warning' : '' }}"></i> <div class="fa {{ Route::currentRouteName() == 'orders' ? 'text-warning' : '' }}">{{ __('Order') }}</div>
+                        <i class="ni ni-pin-3 text-orange"></i> {{ __('Order') }}
                     </a>
                 </li>
                 <li class="nav-item nav-hover {{ Route::currentRouteName() == 'orderProducts' ? 'nav-active' : '' }}" id="orderProduct">
                     <a class="nav-link" href="{{ route('orderProducts') }}">
-                        <i class="fa fa-paper-plane {{ Route::currentRouteName() == 'orderProducts' ? 'text-warning' : '' }}"></i> <div class="fa {{ Route::currentRouteName() == 'orderProducts' ? 'text-warning' : '' }}">{{ __('Produk Order') }}</div>
+                        <i class="ni ni-pin-3 text-orange"></i> {{ __('Produk Order') }}
                     </a>
                 </li>
                 <li class="nav-item nav-hover {{ Route::currentRouteName() == 'payments' ? 'nav-active' : '' }}" id="payment">
                     <a class="nav-link" href="{{ route('payments') }}">
-                        <i class="fa fa-credit-card {{ Route::currentRouteName() == 'payments' ? 'text-warning' : '' }}"></i> <div class="fa {{ Route::currentRouteName() == 'payments' ? 'text-warning' : '' }}">{{ __('Pembayaran') }}</div>
+                        <i class="ni ni-planet text-blue"></i> {{ __('Pembayaran') }}
                     </a>
                 </li>
                 <li class="nav-item nav-hover {{ Route::currentRouteName() == 'statuses' ? 'nav-active' : '' }}" id="status">
                     <a class="nav-link" href="{{ route('statuses') }}">
-                        <i class="fa fa-signal {{ Route::currentRouteName() == 'statuses' ? 'text-warning' : '' }}"></i> <div class="fa {{ Route::currentRouteName() == 'statuses' ? 'text-warning' : '' }}">{{ __('Status') }}</div>
+                        <i class="ni ni-planet text-blue"></i> {{ __('Status') }}
                     </a>
                 </li>
-                <li class="nav-item nav-hover {{ Route::currentRouteName() == 'about' ? 'nav-active' : '' }}">
-                    <a class="nav-link" href="{{route('about')}}">
-                      <i class="fa fa-info {{ Route::currentRouteName() == 'about' ? 'text-warning' : '' }}"></i> <div class="fa {{ Route::currentRouteName() == 'about' ? 'text-warning' : '' }}">{{__('About')}}</div>
+                <li class="nav-item nav-hover">
+                    <a class="nav-link" href="">
+                      <i class="ni ni-bullet-list-67 text-default"></i>
+                      <span class="nav-link-text">Tables</span>
                     </a>
                 </li>
             </ul>

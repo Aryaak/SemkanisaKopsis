@@ -6,6 +6,7 @@ use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Exception;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OrderController extends Controller
 {
@@ -36,7 +37,7 @@ class OrderController extends Controller
         }
         Session::flash('message', 'Order berhasil dibuat');
         Session::flash('alert-class', 'alert-success');
-        return redirect()->route('categories');
+        return redirect()->route('orders');
     }
 
     /**
@@ -70,6 +71,21 @@ class OrderController extends Controller
         }
         Session::flash('message', 'Order berhasil diubah');
         Session::flash('alert-class', 'alert-warning');
-        return redirect()->route('categories');
+        return redirect()->route('orders');
+    }
+
+    public function delete($id)
+    {
+        try {
+            $order = order::find($id);
+            $order->delete();
+        } catch (Exception $e) {
+            Session::flash('message', $e);
+            Session::flash('alert-class', 'alert-danger');
+            return redirect()->route('products');
+        }
+        Session::flash('message', 'Order berhasil dihapus');
+        Session::flash('alert-class', 'alert-warning');
+        return redirect()->route('orders');
     }
 }

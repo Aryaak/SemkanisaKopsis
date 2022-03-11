@@ -6,9 +6,11 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Exception;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CategoryController extends Controller
 {
+    use SoftDeletes;
     /**
      * Display a listing of the resource.
      *
@@ -69,6 +71,21 @@ class CategoryController extends Controller
             return redirect()->route('products');
         }
         Session::flash('message', 'Kategori berhasil diubah');
+        Session::flash('alert-class', 'alert-warning');
+        return redirect()->route('categories');
+    }
+
+    public function delete($id)
+    {
+        try {
+            $category = Category::find($id);
+            $category->delete();
+        } catch (Exception $e) {
+            Session::flash('message', $e);
+            Session::flash('alert-class', 'alert-danger');
+            return redirect()->route('products');
+        }
+        Session::flash('message', 'Kategori berhasil dihapus');
         Session::flash('alert-class', 'alert-warning');
         return redirect()->route('categories');
     }
