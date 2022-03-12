@@ -4,14 +4,22 @@ import {
     View
 } from 'react-native'
 import { WaveIllustration } from '../../assets'
-import { Colors } from '../../utils'
+import { Colors,Storage } from '../../utils'
 import { AppProfile } from '../../components'
 import { StackActions } from '@react-navigation/native'
 
 const SplashScreen = ({ navigation }) => {
 
     setTimeout(() => {
-        navigation.dispatch(StackActions.replace('Login'));
+        Storage.get('isLogged')
+        .then(res=> {
+            if(res){
+                navigation.dispatch(StackActions.replace('MainPages'));
+            } else {
+                navigation.dispatch(StackActions.replace('Login'));
+            }
+
+        })
     }, 3000)
 
     return (

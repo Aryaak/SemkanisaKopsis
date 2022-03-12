@@ -4,7 +4,7 @@ import {
     View,
     ScrollView
 } from 'react-native'
-import { Colors } from '../../utils'
+import { Colors,Storage } from '../../utils'
 import {
     AppProfileHeader,
     Input,
@@ -35,17 +35,24 @@ const Register = () => {
 
         for (let item in form) {
             if (!form[item]) {
-                alert('required')
+                alert('Semua wajib diisi!')
+                return
             }
         }
 
+        const data = form
+        delete data.password_c
         await axios.post(BASE_API_URL + 'register', form)
             .then(res => {
-                if (res.meta.code == 200) {
-
+                if (res.data.meta.code == 200) {
+                    Storage.set('isLogged', true);
+                    Storage.set('user', res.data.data);
+                    navigation.dispatch(StackActions.replace('MainPages'));
+                } else {
+                    alert('Pendaftaran Gagal!')
                 }
             })
-            .catch(err => console.log('ERROR LOGIN ', err))
+            .catch(err => console.log('ERROR REGISTER ', err))
     }
     return (
         <ScrollView style={styles.container}  >

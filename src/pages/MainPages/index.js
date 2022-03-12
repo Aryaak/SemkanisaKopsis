@@ -3,7 +3,8 @@ import { View } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
     Home,
-    Pay, Profile
+    Pay,
+    Profile
 } from '../../pages'
 
 import {
@@ -49,7 +50,6 @@ const MainPages = () => {
                             </View>
                         )
                     }
-
                 }
             }} name="Home" component={Home} />
             <Tab.Screen

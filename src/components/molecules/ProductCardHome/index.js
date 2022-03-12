@@ -1,16 +1,16 @@
 import React from 'react'
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View, Image } from 'react-native'
 import { InterFont } from '../../../components'
 import { Colors } from '../../../utils'
 
-const ProductCardHome = ({ onPress }) => {
+const ProductCardHome = ({ onPress, name, price, photo }) => {
     return (
         <TouchableOpacity onPress={onPress}>
             <View style={styles.card}>
+                <Image style={styles.card} source={{ uri: photo }} />
             </View>
-
-            <InterFont text='Pensil 2B' type="SemiBold" style={styles.name} />
-            <InterFont text='Rp. 3.500' type="Bold" style={styles.price} />
+            <InterFont text={name} type="SemiBold" style={styles.name} />
+            <InterFont text={'Rp. ' + price} type="Bold" style={styles.price} />
         </TouchableOpacity>
     )
 }

@@ -1,6 +1,6 @@
-import React from 'react'
-import { StyleSheet, View, ScrollView, TouchableOpacity } from 'react-native'
-import { Colors } from '../../utils'
+import React, { useState, useEffect } from 'react'
+import { StyleSheet, View, ScrollView } from 'react-native'
+import { Colors, Storage } from '../../utils'
 import {
     WaveIllustration,
     NotifIcon,
@@ -16,13 +16,23 @@ import {
 import { InterFont, ProductsHome } from '../../components'
 
 const Home = () => {
+    const [user, setUser] = useState({})
+
+    useEffect(() => {
+        Storage.get('user')
+            .then(res => {
+                setUser(res)
+            })
+
+    }, [])
+
     return (
         <ScrollView style={{ backgroundColor: 'white' }} >
             <View style={styles.headerWrapper}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                     <View>
                         <InterFont text='Saldo Kopsis' type="SemiBold" style={{ fontSize: 16, color: 'white' }} />
-                        <InterFont text='Rp 500.000' type="Bold" style={{ fontSize: 24, color: 'white', marginTop: 5 }} /></View>
+                        <InterFont text={'Rp. ' + user.balance} type="Bold" style={{ fontSize: 24, color: 'white', marginTop: 5 }} /></View>
                     <NotifIcon />
                 </View>
                 <WaveIllustration style={{ position: 'absolute', bottom: -150, right: 0 }} />

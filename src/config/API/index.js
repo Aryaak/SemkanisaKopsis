@@ -1,4 +1,4 @@
-const BASE_API_URL = 'https://192.168.5.189:80/api/'
+const BASE_API_URL = 'http://ec2-13-212-221-18.ap-southeast-1.compute.amazonaws.com/api/'
 
 module.exports = {
     BASE_API_URL

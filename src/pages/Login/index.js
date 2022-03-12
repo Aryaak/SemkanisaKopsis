@@ -4,7 +4,7 @@ import {
     View,
     ScrollView
 } from 'react-native'
-import { Colors } from '../../utils'
+import { Colors, Storage } from '../../utils'
 import {
     AppProfileHeader,
     Input,
@@ -12,29 +12,35 @@ import {
     Anchor,
     InterFont
 } from '../../components'
+import { StackActions } from '@react-navigation/native'
 
 import { BASE_API_URL } from '../../config'
 
 import axios from 'axios'
 
-const Login = () => {
+const Login = ({ navigation }) => {
 
     const [form, setForm] = useState({ email: '', password: '' })
 
     const onValueChange = (type, value) => {
         setForm({ ...form, [type]: value })
     }
-
     const submitLogin = async () => {
         for (let item in form) {
             if (!form[item]) {
-                alert('required')
+                alert('Semua wajib diisi!')
+                return
             }
         }
         await axios.post(BASE_API_URL + 'login', form)
             .then(res => {
-                if (res.meta.code == 200) {
-
+                if (res.data.meta.code == 200) {
+                    Storage.set('isLogged', true);
+                    Storage.set('user', res.data.data);
+                    Storage.set('token', 'Bearer ' + res.data.data.token);
+                    navigation.dispatch(StackActions.replace('MainPages'));
+                } else {
+                    alert('Email/Password Salah!')
                 }
             })
             .catch(err => console.log('ERROR LOGIN ', err))

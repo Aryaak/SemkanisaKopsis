@@ -1,7 +1,8 @@
-import React from 'react'
-import { View, ScrollView, TouchableOpacity } from 'react-native'
-import { Colors } from '../../utils'
+import React, { useEffect, useState } from 'react'
+import { View, ScrollView, TouchableOpacity, Image } from 'react-native'
+import { Colors, Storage } from '../../utils'
 import { InterFont } from '../../components'
+import { StackActions } from '@react-navigation/native'
 import {
     WaveIllustration,
     ImportantIcon,
@@ -12,10 +13,22 @@ import {
 import { useNavigation } from '@react-navigation/native'
 const Profile = () => {
 
+    const [user, setUser] = useState({})
+
+    useEffect(() => {
+        Storage.get('user')
+            .then(res => {
+                setUser(res)
+            })
+
+    }, [])
+
     const navigation = useNavigation()
 
     const submitLogout = () => {
-        navigation.navigate('Login')
+        Storage.set('isLogged', null);
+        Storage.set('user', null);
+        navigation.dispatch(StackActions.replace('Login'));
     }
 
     return (
@@ -42,10 +55,12 @@ const Profile = () => {
                     alignItems: 'center',
                     paddingHorizontal: 16
                 }}>
-                    <View style={{ width: 60, height: 60, backgroundColor: Colors.grey, borderRadius: 60 / 2 }}></View>
+                    <View style={{ width: 60, height: 60, backgroundColor: Colors.grey, borderRadius: 60 / 2 }}>
+                        <Image source={{ uri: user.photo }} style={{ width: 60, height: 60, backgroundColor: Colors.grey, borderRadius: 60 / 2 }} />
+                    </View>
 
                     <View style={{ marginLeft: 16 }}>
-                        <InterFont text="Samantha Zalora" type="Bold" style={{ color: 'black', fontSize: 18, marginBottom: 10 }} />
+                        <InterFont text={user.name} type="Bold" style={{ color: 'black', fontSize: 18, marginBottom: 10 }} />
                         <InterFont text="Ubah profile" style={{ color: Colors.grey, fontSize: 14, }} />
                     </View>
                 </View>
