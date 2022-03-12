@@ -17,8 +17,8 @@ class OrderProductsController extends Controller
      */
     public function index()
     {
-        $orderproduct = orderproduct::all();
-        return view('orderproduct.index', ['orderproduct' => $orderproduct]);
+        $orderproduct = OrderProduct::all();
+        return view('orderProduct.index', ['orderproduct' => $orderproduct]);
     }
 
     /**
@@ -49,7 +49,7 @@ class OrderProductsController extends Controller
     public function edit(orderproduct $orderproduct, $id)
     {
         $orderproduct = orderproduct::find($id);
-        return view('orderproduct.edit', ['orderproduct' => $orderproduct]);
+        return view('orderProduct.edit', ['orderproduct' => $orderproduct]);
     }
 
     /**

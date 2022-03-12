@@ -45,52 +45,63 @@
                 <thead class="thead-light">
                   <tr>
                     <th scope="col" class="sort" data-sort="id">ID</th>
+                    <th scope="col" class="sort" data-sort="name">Pembeli</th>
                     <th scope="col" class="sort" data-sort="name">Nama</th>
+                    <th scope="col" class="sort" data-sort="name">Jumlah</th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody class="list">
-                    @foreach ($orderproduct as $orderproduct)
+                    @foreach ($orderproduct as $product)
                   <tr>
                       <td class="id">
-                        <div class="media-body">{{$orderproduct->id}}</div>
+                        <div class="media-body">{{$product->id}}</div>
+                      </td>
+                        <td >
+                        <div class="media-body">{{$product->order->user->name}}</div>
+                      </td>
+                        <td >
+                        <div class="media-body">{{$product->product->name}}</div>
+                      </td>
+                      <td >
+                        <div class="media-body">{{$product->qty}}</div>
                       </td>
                     <th scope="row">
                       <div class="media align-items-center">
                         <div class="media-body">
-                          <span class="name mb-0 text-sm">{{$orderproduct->name}}</span>
+                          <span class="name mb-0 text-sm">{{$product->name}}</span>
                         </div>
                       </div>
                     </th>
                     <td class="text-right">
-                        <a class="btn btn-sm btn-icon-only" style="color: #f48e5f;" data-toggle="modal" data-target="#Edit{{$orderproduct->id}}">
-                        <img class="img-fluid" src="{{asset('public/img/icons/edit.svg')}}" alt="Ubah">
+                        <a class="btn btn-sm btn-icon-only" style="color: #f48e5f;" data-toggle="modal" data-target="#Edit{{$product->id}}">
+                        <img class="img-fluid" src="{{asset('img/icons/edit.svg')}}" alt="Ubah">
                         </a>
-                        <form action="{{route('orderproduct.update',$orderproduct->id)}}" method="post">
+                        <form action="{{route('orderProduct.update',$product->id)}}" method="post">
                             @csrf
                             <input style="display: none;" value="1" id="deleted" name="deleted">
                             <button type="submit" class="btn btn-sm btn-icon-only" onclick="return confirm('Apakah anda yakin ingin menghapus?')" style="color: #f4645f;">
-                            <img class="img-fluid" src="{{asset('public/img/icons/trash.svg')}}" alt="Hapus">
+                            <img class="img-fluid" src="{{asset('img/icons/trash.svg')}}" alt="Hapus">
                         </button>
                     </form>
                     </td>
                   </tr>
                   <!-- Edit Modal -->
-  <div class="float modal fade" id="Edit{{$orderproduct->id}}" tabindex="-1" aria-labelledby="Edit{{$orderproduct->id}}Label" aria-hidden="true">
+  <div class="float modal fade" id="Edit{{$product->id}}" tabindex="-1" aria-labelledby="Edit{{$product->id}}Label" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="Edit{{$orderproduct->id}}Label">Add</h5>
+          <h5 class="modal-title" id="Edit{{$product->id}}Label">Add</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-            <form method="POST" action="{{route('orderproduct.update',$orderproduct->id)}}">
+            <form method="POST" action="{{route('orderProduct.update',$product->id)}}">
                 @csrf
                 <div class="form-group row">
                   <label for="name" class="col-sm-2 col-form-label">Nama</label>
-                  <input type="text" class="form-control col-sm-9" id="name" name="name" placeholder="Masukan Nama orderproduct, contoh: Pending, Succsess" value="{{$orderproduct->name}}" required autofocus>
+                  <input type="text" class="form-control col-sm-9" id="name" name="name" placeholder="Masukan Nama orderproduct, contoh: Pending, Succsess" value="{{$product->name}}" required autofocus>
                 </div>
             </div>
             <div class="modal-footer">

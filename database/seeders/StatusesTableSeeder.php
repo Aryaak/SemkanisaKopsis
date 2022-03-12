@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Status;
+use App\Models\OrderStatus;
 use Illuminate\Database\Seeder;
 
 class StatusesTableSeeder extends Seeder
@@ -14,10 +14,10 @@ class StatusesTableSeeder extends Seeder
      */
     public function run()
     {
-        Status::create([
+        OrderStatus::create([
             'name' => 'Pending'
         ]);
-        Status::create([
+        OrderStatus::create([
             'name' => 'Complete'
         ]);
     }

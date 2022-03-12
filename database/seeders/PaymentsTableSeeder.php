@@ -18,13 +18,16 @@ class PaymentsTableSeeder extends Seeder
             'name' => 'Tunai'
         ]);
         Payment::create([
-            'name' => 'Debit'
+            'name' => 'Saldo'
         ]);
-        Payment::create([
-            'name' => 'Kredit'
-        ]);
-        Payment::create([
-            'name' => 'Crypto'
-        ]);
+        // Payment::create([
+        //     'name' => 'Debit'
+        // ]);
+        // Payment::create([
+        //     'name' => 'Kredit'
+        // ]);
+        // Payment::create([
+        //     'name' => 'Crypto'
+        // ]);
     }
 }

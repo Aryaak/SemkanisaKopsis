@@ -17,6 +17,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('order/store', [OrderController::class, 'store']);
 
     Route::get('product/get-for-home', [ProductController::class, 'getForHome']);
+    Route::get('product/get-detail/{id}', [ProductController::class, 'getDetail']);
     Route::get('product/get-related', [ProductController::class, 'getRelated']);
     Route::get('product/get-by-category', [ProductController::class, 'getByCategory']);
 });

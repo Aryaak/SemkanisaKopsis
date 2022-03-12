@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Status;
+use App\Models\OrderStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Exception;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class StatusController extends Controller
 {
-    use SoftDeletes;
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +16,7 @@ class StatusController extends Controller
      */
     public function index()
     {
-        $status = Status::all();
+        $status = OrderStatus::all();
         return view('status.index', ['status' => $status]);
     }
 
@@ -27,7 +25,7 @@ class StatusController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Status $status, Request $request)
+    public function create(OrderStatus $status, Request $request)
     {
         try {
             $status->create($request->all());
@@ -47,9 +45,9 @@ class StatusController extends Controller
      * @param  \App\Models\status  $status
      * @return \Illuminate\Http\Response
      */
-    public function edit(Status $status, $id)
+    public function edit(OrderStatus $status, $id)
     {
-        $status = Status::find($id);
+        $status = OrderStatus::find($id);
         return view('status.edit', ['status' => $status]);
     }
 
@@ -60,10 +58,10 @@ class StatusController extends Controller
      * @param  \App\Models\status  $status
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Status $status, $id)
+    public function update(Request $request, OrderStatus $status, $id)
     {
         try {
-            $status = Status::find($id);
+            $status = OrderStatus::find($id);
             $status->update($request->all());
         } catch (Exception $e) {
             Session::flash('message', $e);
@@ -78,7 +76,7 @@ class StatusController extends Controller
     public function delete($id)
     {
         try {
-            $status = Status::find($id);
+            $status = OrderStatus::find($id);
             $status->delete();
         } catch (Exception $e) {
             Session::flash('message', $e);
